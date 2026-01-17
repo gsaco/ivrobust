@@ -1,0 +1,23 @@
+site_name: ivrobust
+site_description: "Weak-instrument robust inference for linear IV/GMM."
+repo_url: "https://github.com/gsaco/ivrobust"
+site_url: "https://github.com/gsaco/ivrobust"
+nav:
+  - Home: index.md
+  - Methods:
+      - Anderson-Rubin: methods/anderson_rubin.md
+  - Tutorials:
+      - IV basics: tutorials/01_iv_basics.md
+      - AR confidence sets: tutorials/02_ar_confidence_sets.md
+      - Clustered data: tutorials/03_clustered_data.md
+  - Reference:
+      - API: reference/api.md
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
