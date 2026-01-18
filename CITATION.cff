@@ -1,9 +1,19 @@
 cff-version: 1.2.0
-message: "If you use ivrobust, please cite it."
-title: "ivrobust: Weak-instrument robust inference for linear IV/GMM"
-version: "0.1.0"
-date-released: "2026-01-17"
+title: ivrobust
+message: >-
+  If you use ivrobust in academic work, please cite it using this metadata and
+  cite the methodological references relevant to the tests/estimators you use.
+type: software
+license: MIT
+repository-code: https://github.com/gsaco/ivrobust
+url: https://github.com/gsaco/ivrobust
 authors:
-  - family-names: "Saco"
-    given-names: "Gabriel"
-repository-code: "https://github.com/gsaco/ivrobust"
+  - name: ivrobust contributors
+version: 0.2.0
+date-released: 2026-01-17
+keywords:
+  - econometrics
+  - instrumental variables
+  - weak instruments
+  - Anderson-Rubin
+  - robust inference

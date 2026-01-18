@@ -1,23 +1,58 @@
 site_name: ivrobust
-site_description: "Weak-instrument robust inference for linear IV/GMM."
-repo_url: "https://github.com/gsaco/ivrobust"
-site_url: "https://github.com/gsaco/ivrobust"
-nav:
-  - Home: index.md
-  - Methods:
-      - Anderson-Rubin: methods/anderson_rubin.md
-  - Tutorials:
-      - IV basics: tutorials/01_iv_basics.md
-      - AR confidence sets: tutorials/02_ar_confidence_sets.md
-      - Clustered data: tutorials/03_clustered_data.md
-  - Reference:
-      - API: reference/api.md
+site_description: Weak-instrument robust inference for linear IV in Python
+repo_url: https://github.com/gsaco/ivrobust
+repo_name: gsaco/ivrobust
+edit_uri: edit/main/docs/
+
 theme:
   name: material
   features:
-    - navigation.sections
+    - navigation.tabs
+    - navigation.indexes
     - content.code.copy
+    - toc.follow
+  palette:
+    - scheme: default
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_signature_annotations: true
+  - bibtex:
+      bib_file: "docs/references.bib"
+  - mkdocs-jupyter:
+      include_source: true
+      execute: false
+
 markdown_extensions:
   - admonition
   - toc:
       permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - User guide:
+      - user-guide/index.md
+      - Anderson-Rubin inference: user-guide/ar.md
+      - Estimators: user-guide/estimators.md
+      - Diagnostics: user-guide/diagnostics.md
+      - Plotting: user-guide/plotting.md
+  - API reference: reference/api.md
+  - References: references.md
+  - How to cite: how-to-cite.md
+  - Roadmap: roadmap.md
+  - FAQ: faq.md

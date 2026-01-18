@@ -1,27 +1,57 @@
 # Contributing
 
-Thanks for your interest in contributing to ivrobust. We welcome issues, bug
-reports, documentation improvements, and code contributions.
+Thanks for your interest in contributing to ivrobust.
 
 ## Development setup
 
+1. Clone the repository.
+2. Create and activate a virtual environment.
+3. Install development dependencies:
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .[dev,test,docs]
+pip install -e ".[dev,plot,docs]"
+pre-commit install
 ```
 
-## Quality checks
+## Running checks locally
+
+Lint + format:
 
 ```bash
 ruff check .
-ruff format --check .
+ruff format .
+black .
+```
+
+Type checking:
+
+```bash
 mypy src/ivrobust
+pyright
+```
+
+Tests:
+
+```bash
 pytest
 ```
 
-## Notes
+Docs:
 
-- Keep changes scoped and add tests for new behavior.
-- Document assumptions and validity regions for any inference method.
-- Avoid introducing new runtime dependencies unless clearly justified.
+```bash
+mkdocs build
+```
+
+Notebooks (must run top-to-bottom):
+
+```bash
+pytest --nbmake notebooks/*.ipynb
+```
+
+## Pull request checklist
+
+- Tests added/updated and passing
+- Type checking passes
+- Documentation updated (docstrings + user guide + references if needed)
+- Plotting outputs use ivrobust.set_style() and ivrobust.savefig()
+- Changelog entry added (if user-facing change)

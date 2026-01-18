@@ -1,30 +1,15 @@
 # ivrobust
 
-Weak-instrument robust inference for linear IV/GMM in Python.
+ivrobust provides weak-instrument robust inference for linear instrumental
+variable models, with a focus on routines that remain valid when instruments are
+weak.
 
-## Quickstart
+Current release scope:
 
-```python
-import ivrobust as ivr
+- Anderson-Rubin tests for a scalar structural parameter
+- Set-valued (possibly disjoint) AR confidence sets
+- HC0/HC1 and one-way cluster robust covariance options
+- Workflow estimators (2SLS) and first-stage diagnostics for reporting
 
-data, beta_true = ivr.weak_iv_dgp(n=300, k=5, strength=0.4, beta=1.0, seed=0)
-
-ar = ivr.ar_test(data, beta0=[beta_true])
-print(ar.statistic, ar.pvalue)
-
-cs = ivr.ar_confidence_set(data, alpha=0.05)
-print(cs.confidence_set.intervals)
-```
-
-## Scope
-
-- AR tests and set-valued confidence sets for scalar parameters.
-- Robust covariance options: HC0/HC1 and one-way cluster-robust moments.
-- Strong-ID estimators (TSLS, LIML) for workflow support; standard errors are
-  not weak-IV robust.
-
-## Next pages
-
-- Methods: Anderson-Rubin
-- Tutorials: IV basics, AR confidence sets, clustered data caveats
-- Reference: API overview
+If you are new to weak-IV robust inference, start with the Quickstart and the
+AR guide.

@@ -1,81 +1,146 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
 
 [project]
 name = "ivrobust"
-version = "0.1.0"
-description = "Weak-instrument robust inference for linear IV/GMM."
+version = "0.2.0"
+description = "Weak-instrument robust inference for linear IV in Python."
 readme = "README.md"
-requires-python = ">=3.9"
-license = {file = "LICENSE"}
-authors = [{name = "Gabriel Saco"}]
-keywords = ["econometrics", "instrumental variables", "weak instruments", "gmm"]
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "ivrobust contributors" }]
+keywords = [
+  "econometrics",
+  "instrumental-variables",
+  "weak-instruments",
+  "anderson-rubin",
+  "robust-inference",
+]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
+  "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Scientific/Engineering :: Information Analysis",
 ]
-dependencies = ["numpy>=1.23", "scipy>=1.9"]
+dependencies = [
+  "numpy>=1.23",
+  "scipy>=1.10",
+  "typing-extensions>=4.7; python_version<'3.11'",
+]
 
 [project.optional-dependencies]
-test = ["pytest>=7.4", "pytest-cov>=4.1", "ivmodels>=0.2"]
-dev = ["pre-commit>=3.5", "ruff>=0.5", "mypy>=1.8", "pytest>=7.4", "pytest-cov>=4.1", "ivmodels>=0.2"]
-docs = ["mkdocs>=1.5", "mkdocs-material>=9.5"]
-bench = ["pandas>=1.5"]
+plot = ["matplotlib>=3.8"]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "black>=24.8",
+  "mypy>=1.10",
+  "pyright>=1.1.380",
+  "pre-commit>=3.7",
+  "build>=1.2",
+  "twine>=5.1",
+  "nbmake>=1.5",
+  "jupyter>=1.0",
+  "ipykernel>=6.29",
+  "pandas>=2.0",
+  "statsmodels>=0.14",
+]
+docs = [
+  "mkdocs-material>=9.5",
+  "mkdocstrings[python]>=0.25",
+  "mkdocs-jupyter>=0.25",
+  "mkdocs-bibtex>=2.16",
+]
 
 [project.urls]
 Homepage = "https://github.com/gsaco/ivrobust"
-Repository = "https://github.com/gsaco/ivrobust"
+Source = "https://github.com/gsaco/ivrobust"
 Issues = "https://github.com/gsaco/ivrobust/issues"
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-ivrobust = ["py.typed"]
-
 [tool.ruff]
+target-version = "py310"
 line-length = 88
-target-version = "py39"
+extend-exclude = [
+  "artifacts",
+  "notebooks/.ipynb_checkpoints",
+]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP"]
-ignore = ["UP045"]
+select = [
+  "E",
+  "F",
+  "I",
+  "UP",
+  "B",
+  "SIM",
+  "C4",
+  "ARG",
+  "RUF",
+]
+ignore = [
+  "E501",  # line length handled by formatter
+]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-line-ending = "lf"
+[tool.ruff.lint.isort]
+known-first-party = ["ivrobust"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
 
 [tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-strict_optional = true
-disallow_untyped_defs = false
-check_untyped_defs = true
-no_implicit_optional = true
+python_version = "3.10"
+strict = true
+warn_unreachable = true
 show_error_codes = true
+pretty = true
+exclude = "(^docs/|^notebooks/|^examples/)"
 
 [[tool.mypy.overrides]]
-module = "scipy"
+module = [
+  "matplotlib.*",
+  "statsmodels.*",
+  "pandas.*",
+]
 ignore_missing_imports = true
 
-[[tool.mypy.overrides]]
-module = "scipy.*"
-ignore_missing_imports = true
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "none"
+exclude = [
+  "docs",
+  "notebooks",
+  "examples",
+]
 
 [tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q"
 testpaths = ["tests"]
-addopts = "-q"
+filterwarnings = [
+  "error",
+  "ignore:.*distutils.*:DeprecationWarning",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["ivrobust"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 90
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ivrobust"]
