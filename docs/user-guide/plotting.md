@@ -22,3 +22,17 @@ Saving figures:
 paths = ivr.savefig(fig, "artifacts/figures/example", formats=("png", "pdf"))
 paths
 ```
+
+## Weak-IV p-value curves
+
+```python
+res = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+    return_grid=True,
+)
+fig, ax = res.plot()
+```

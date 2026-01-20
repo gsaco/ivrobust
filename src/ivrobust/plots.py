@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from .ar import ARConfidenceSetResult
+from .results import ConfidenceSetResult
 from .plot_style import set_style
 
 
-def plot_ar_confidence_set(cs: ARConfidenceSetResult, *, ax=None):
+def plot_ar_confidence_set(cs: ConfidenceSetResult, *, ax=None):
     """
     Plot an AR confidence set as horizontal intervals.
 
@@ -35,16 +35,30 @@ def plot_ar_confidence_set(cs: ARConfidenceSetResult, *, ax=None):
         ax.set_axis_off()
         return fig, ax
 
+    grid = cs.grid_info.get("grid")
+    if grid is None:
+        finite = [val for pair in intervals for val in pair if np.isfinite(val)]
+        if finite:
+            grid_min = float(min(finite))
+            grid_max = float(max(finite))
+        else:
+            grid_min, grid_max = -1.0, 1.0
+    else:
+        grid_min = float(np.min(grid))
+        grid_max = float(np.max(grid))
+
     y0 = 0.0
     for (lo, hi) in intervals:
-        x1 = lo if np.isfinite(lo) else float(np.min(cs.grid)) - 0.5
-        x2 = hi if np.isfinite(hi) else float(np.max(cs.grid)) + 0.5
+        x1 = lo if np.isfinite(lo) else grid_min - 0.5
+        x2 = hi if np.isfinite(hi) else grid_max + 0.5
         ax.plot([x1, x2], [y0, y0], solid_capstyle="butt")
         ax.scatter([x1, x2], [y0, y0], s=18)
 
     ax.set_yticks([])
     ax.set_xlabel(r"$\beta$")
+    df = cs.grid_info.get("df", "?")
+    cov_type = cs.grid_info.get("cov_type", "")
     ax.set_title(
-        f"AR {(1.0 - cs.alpha):.0%} confidence set (df={cs.df}, {cs.cov_type})"
+        f"AR {(1.0 - cs.alpha):.0%} confidence set (df={df}, {cov_type})"
     )
     return fig, ax

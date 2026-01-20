@@ -36,7 +36,10 @@ res = ivr.ar_test(data, beta0=beta_true, cov_type="HC1")
 res.statistic, res.pvalue
 ```
 
-Confidence sets:
+Covariance options: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, and
+`"cluster"` (one-way clustering with `data.clusters`).
+
+Confidence sets return a `ConfidenceSetResult` with a union-of-intervals object:
 
 The AR confidence set is obtained by inverting the AR test across values of
 $\beta$.

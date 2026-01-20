@@ -6,6 +6,7 @@ ivrobust provides:
 
 - Classical first-stage F-statistic
 - Partial $R^2$
+- Effective F (heteroskedasticity/cluster-robust)
 
 ```python
 import ivrobust as ivr
@@ -17,8 +18,14 @@ diag.f_statistic, diag.partial_r2
 
 ## Effective F (Montiel Olea-Pflueger)
 
-The heteroskedasticity/cluster-robust effective F-statistic is planned (see
-Roadmap).
+The effective F statistic is designed to remain informative under
+heteroskedasticity or clustering. It is based on the robust covariance of the
+reduced-form coefficients in the first stage.
+
+```python
+eff = ivr.effective_f(data, cov_type="HC1")
+eff.statistic
+```
 
 Reference: Montiel Olea and Pflueger (2013), DOI: 10.1080/00401706.2013.806694.
 See the References page for formatted citations.

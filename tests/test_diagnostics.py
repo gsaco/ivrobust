@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from ivrobust import IVData, first_stage_diagnostics, weak_iv_dgp
+from ivrobust import IVData, effective_f, first_stage_diagnostics, weak_iv_dgp
 
 
 def test_first_stage_diagnostics_runs() -> None:
@@ -30,3 +30,11 @@ def test_first_stage_diagnostics_errors() -> None:
     data_small = IVData(y=y2, d=d2, x=x2, z=z2)
     with pytest.raises(ValueError, match="Need n > number of first-stage regressors"):
         first_stage_diagnostics(data_small)
+
+
+def test_effective_f_matches_first_stage_unadjusted() -> None:
+    data, _ = weak_iv_dgp(n=400, k=3, strength=0.8, beta=1.0, seed=4)
+    eff = effective_f(data, cov_type="unadjusted")
+    diag = first_stage_diagnostics(data)
+
+    assert np.isclose(eff.statistic, diag.f_statistic, rtol=0.05, atol=1e-3)

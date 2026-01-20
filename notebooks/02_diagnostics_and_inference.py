@@ -19,8 +19,18 @@
 # This notebook focuses on:
 #
 # - First-stage reporting (F-statistic, partial R^2)
+# - Effective F (Montiel Olea–Pflueger)
 # - Interpreting weak-IV robust confidence sets
 # - Comparing conventional and weak-IV robust outputs
+#
+# ## Implementation context (for contributors)
+#
+# - What to build: effective F diagnostics and unified inference reporting.
+# - Why it matters: classical first-stage F can be misleading under
+#   heteroskedasticity or clustering.
+# - Literature/benchmarks: Montiel Olea & Pflueger (2013); Andrews–Stock–Sun (2019).
+# - Codex-ready tasks: add `effective_f` and integrate into results summaries.
+# - Tests/docs: unit tests comparing effective F to classical F under iid settings.
 #
 
 # %%
@@ -37,6 +47,10 @@ ivr.set_style()
 data, beta_true = ivr.weak_iv_dgp(n=500, k=5, strength=0.2, beta=1.0, seed=2)
 diag = ivr.first_stage_diagnostics(data)
 diag
+
+# %%
+eff = ivr.effective_f(data, cov_type="HC1")
+eff
 
 # %% [markdown]
 # A low first-stage F-statistic and partial R^2 indicate weak instruments. In
@@ -60,13 +74,19 @@ tsls_res.beta, tsls_res.stderr[-1, 0]
 #
 
 # %%
-cs = ivr.ar_confidence_set(data, alpha=0.05, cov_type="HC1", beta_bounds=(-10, 10))
-cs.confidence_set.intervals
+weakiv = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+)
+weakiv.confidence_sets["AR"].confidence_set.intervals
 
 # %% [markdown]
 # The AR confidence set is robust to weak identification and may be wider than
 # conventional confidence intervals, reflecting true uncertainty.
 
 # %%
-fig, ax = ivr.plot_ar_confidence_set(cs)
+fig, ax = ivr.plot_ar_confidence_set(weakiv.confidence_sets["AR"])
 ivr.savefig(fig, ART / "ar_confidence_set", formats=("png", "pdf"))

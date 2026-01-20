@@ -5,7 +5,9 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.stats import f
 
+from .covariance import CovType
 from .data import IVData
+from .weakiv_utils import reduced_form
 
 
 @dataclass(frozen=True)
@@ -21,6 +23,21 @@ class FirstStageDiagnostics:
     partial_r2: float
     k_instr: int
     nobs: int
+
+
+@dataclass(frozen=True)
+class EffectiveFResult:
+    """
+    Effective F statistic for weak-instrument diagnostics (single endogenous regressor).
+    """
+
+    statistic: float
+    df_num: int
+    df_denom: int
+    cov_type: str
+    nobs: int
+    k_instr: int
+    warnings: tuple[str, ...] = ()
 
 
 def first_stage_diagnostics(data: IVData) -> FirstStageDiagnostics:
@@ -82,4 +99,37 @@ def first_stage_diagnostics(data: IVData) -> FirstStageDiagnostics:
         partial_r2=float(partial_r2),
         k_instr=k,
         nobs=n,
+    )
+
+
+def effective_f(
+    data: IVData,
+    *,
+    cov_type: CovType = "HC1",
+    clusters: np.ndarray | None = None,
+) -> EffectiveFResult:
+    """
+    Compute the effective F statistic (Montiel Olea & Pflueger) for p_endog=1.
+    """
+    if data.p_endog != 1:
+        raise NotImplementedError("effective_f currently supports p_endog=1.")
+
+    rf = reduced_form(data, cov_type=cov_type, clusters=clusters)
+    k = rf.k_instr
+    V_dd = rf.cov[k:, k:]
+    V_dd_inv = np.linalg.pinv(V_dd)
+    stat = float((rf.pi_d.T @ V_dd_inv @ rf.pi_d).ravel()[0] / k)
+
+    df_denom = data.nobs - data.k_instr - data.p_exog
+    if df_denom <= 0:
+        df_denom = data.nobs - data.k_instr
+
+    return EffectiveFResult(
+        statistic=stat,
+        df_num=k,
+        df_denom=df_denom,
+        cov_type=str(cov_type),
+        nobs=data.nobs,
+        k_instr=k,
+        warnings=rf.warnings,
     )

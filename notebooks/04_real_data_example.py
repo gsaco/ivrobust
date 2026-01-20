@@ -20,6 +20,14 @@
 #
 # We use the `AER::CollegeDistance` dataset via Rdatasets.
 #
+# ## Implementation context (for contributors)
+#
+# - What to build: real-data workflow with weak-IV robust inference outputs.
+# - Why it matters: applied users want an end-to-end example they can adapt.
+# - Literature/benchmarks: Stata weak-IV reporting; estimatr-style regression UX.
+# - Codex-ready tasks: add `weakiv_inference` and diagnostic reporting.
+# - Tests/docs: keep runtime short; guard against network failures.
+#
 
 # %%
 from pathlib import Path

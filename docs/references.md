@@ -9,3 +9,4 @@ and the methods implemented (or planned) in ivrobust.
 - @andrews2019
 - @montielolea2013
 - @finlay2009
+- @kleibergen2002

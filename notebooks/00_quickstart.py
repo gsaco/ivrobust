@@ -19,10 +19,22 @@
 # This notebook runs the smallest end-to-end workflow:
 #
 # 1. Simulate a weak-IV dataset
-# 2. Run an Anderson-Rubin (AR) test
-# 3. Compute an AR confidence set
+# 2. Run weak-IV robust tests (AR/LM/CLR)
+# 3. Compute confidence sets
 # 4. Save one publication-style figure
 #
+# ## Implementation context (for contributors)
+#
+# - What to build: a single-call weak-IV inference workflow with AR/LM/CLR tests
+#   and set-valued confidence sets.
+# - Why it matters: applied users want one entry point that makes weak-IV robust
+#   inference explicit and reproducible.
+# - Literature/benchmarks: Moreira (2003) CLR; Kleibergen (2002) LM/K; Mikusheva
+#   (2010) confidence set shapes; Stata weak-IV reporting for CI behavior.
+# - Codex-ready tasks: implement `weakiv_inference`, add `lm_test`/`clr_test`,
+#   wire plotting helpers, and expose results in the public API.
+# - Tests/docs: unit tests against reference implementations + notebooks showing
+#   disjoint/unbounded sets with reproducible seeds.
 
 # %%
 from pathlib import Path
@@ -40,8 +52,14 @@ data, beta_true = ivr.weak_iv_dgp(n=300, k=5, strength=0.4, beta=1.0, seed=0)
 beta_true
 
 # %%
-ar = ivr.ar_test(data, beta0=beta_true, cov_type="HC1")
-ar
+res = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+)
+res.tests["AR"]
 
 # %% [markdown]
 # ## Interpretation
@@ -52,7 +70,7 @@ ar
 #   is expected behavior rather than a numerical bug.
 
 # %%
-cs = ivr.ar_confidence_set(data, alpha=0.05, cov_type="HC1", beta_bounds=(-10, 10))
+cs = res.confidence_sets["AR"]
 cs.confidence_set.intervals
 
 # %%

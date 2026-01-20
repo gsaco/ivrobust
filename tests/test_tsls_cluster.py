@@ -22,7 +22,7 @@ def test_tsls_errors() -> None:
     x = np.ones((3, 1))
     z = np.ones((3, 1))
     data_multi = IVData(y=y, d=d, x=x, z=z)
-    with pytest.raises(NotImplementedError, match="p_endog"):
+    with pytest.raises(ValueError, match="Need n > number of regressors"):
         tsls(data_multi)
 
     y2 = np.ones((2, 1))

@@ -20,6 +20,14 @@
 #
 # This is a teaching notebook: the goal is reproducibility and interpretation, not exhaustive benchmarking.
 #
+# ## Implementation context (for contributors)
+#
+# - What to build: simulation tests that validate size/coverage under strong vs weak IV.
+# - Why it matters: reviewers expect empirical sanity checks beyond unit tests.
+# - Literature/benchmarks: Andrews–Stock–Sun (2019) guidance on weak-IV diagnostics.
+# - Codex-ready tasks: add lightweight Monte Carlo tests with fixed seeds.
+# - Tests/docs: keep runtime small; pin randomness for reproducibility.
+#
 
 # %%
 from pathlib import Path

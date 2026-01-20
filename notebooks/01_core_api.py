@@ -19,8 +19,20 @@
 # This notebook introduces:
 #
 # - The `IVData` layout
-# - `tsls` for workflow point estimates
-# - `ar_test` and `ar_confidence_set` for weak-IV robust inference
+# - `tsls`/`liml`/`fuller` for workflow point estimates
+# - `ar_test`/`lm_test`/`clr_test` for weak-IV robust inference
+# - `weakiv_inference` as a unified entry point
+#
+# ## Implementation context (for contributors)
+#
+# - What to build: a consistent, front-door API (`IVModel` + `weakiv_inference`)
+#   with standardized result objects.
+# - Why it matters: reduces friction for applied users and makes weak-IV robust
+#   inference visible in routine workflows.
+# - Literature/benchmarks: Stata weak-IV postestimation; estimatr's regression UX.
+# - Codex-ready tasks: add `IVModel.from_arrays`, `IVResults.weakiv`, and
+#   plotting helpers for p-value curves.
+# - Tests/docs: unit tests for API surfaces + notebook examples with pinned seeds.
 #
 
 # %%
@@ -46,29 +58,56 @@ data.nobs, data.p_exog, data.p_endog, data.k_instr
 tsls_res = ivr.tsls(data, cov_type="HC1")
 tsls_res.beta, beta_true
 
+# %%
+liml_res = ivr.liml(data, cov_type="HC1")
+fuller_res = ivr.fuller(data, alpha=1.0, cov_type="HC1")
+liml_res.beta, fuller_res.beta
+
+# %% [markdown]
+# ## Model-style API
+#
+# The model wrapper mirrors familiar stats interfaces.
+
+# %%
+model = ivr.IVModel.from_arrays(
+    y=data.y,
+    x_endog=data.d,
+    z=data.z,
+    x_exog=None,
+    add_const=True,
+)
+model_results = model.fit(estimator="liml", cov_type="HC1")
+model_results.params.ravel()[:3]
+
 # %% [markdown]
 # The 2SLS estimate should be close to the true value on average in this DGP,
 # but its standard errors are not weak-IV robust. Use AR inference for validity
 # under weak identification.
 
 # %% [markdown]
-# ## Weak-IV robust inference: AR test
+# ## Weak-IV robust inference: AR/LM/CLR tests
 #
 
 # %%
-ar = ivr.ar_test(data, beta0=beta_true, cov_type="HC1")
-ar.statistic, ar.pvalue
+weakiv = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+)
+weakiv.tests["AR"], weakiv.tests["LM"], weakiv.tests["CLR"]
 
 # %% [markdown]
 # A non-rejection at the true beta is expected. Under weak instruments, the AR
 # test remains correctly sized, unlike conventional Wald tests.
 
 # %% [markdown]
-# ## AR confidence set
+# ## Confidence sets
 #
 
 # %%
-cs = ivr.ar_confidence_set(data, alpha=0.05, cov_type="HC1", beta_bounds=(-10, 10))
+cs = weakiv.confidence_sets["AR"]
 cs.confidence_set.intervals
 
 # %% [markdown]

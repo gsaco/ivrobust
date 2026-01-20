@@ -3,9 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+import scipy.linalg
 
 from ._typing import FloatArray
-from .covariance import CovType
+from .covariance import CovType, _pinv_sym
 from .data import IVData
 
 
@@ -26,18 +27,12 @@ class TSLSResult:
     cov_type: str
     nobs: int
     df_resid: int
+    method: str = "2sls"
 
     @property
     def beta(self) -> float:
         # By convention: params = [x params..., d param]
         return float(self.params[-1, 0])
-
-
-def _pinv_sym(a: FloatArray) -> FloatArray:
-    vals, vecs = np.linalg.eigh(a)
-    tol = np.max(vals) * 1e-12 if vals.size else 0.0
-    inv_vals = np.where(vals > tol, 1.0 / vals, 0.0)
-    return (vecs * inv_vals) @ vecs.T
 
 
 def tsls(
@@ -66,11 +61,8 @@ def tsls(
     on the coefficient of the endogenous regressor, use `ar_test` or
     `ar_confidence_set`.
     """
-    if data.p_endog != 1:
-        raise NotImplementedError("tsls currently supports p_endog=1.")
-
     y = data.y  # n x 1
-    X = np.hstack([data.x, data.d])  # n x (p_exog + 1)
+    X = np.hstack([data.x, data.d])  # n x (p_exog + p_endog)
     Z = np.hstack([data.x, data.z])  # n x (p_exog + k)
 
     n, p = X.shape
@@ -136,4 +128,139 @@ def tsls(
         cov_type=str(cov_type),
         nobs=n,
         df_resid=df_resid,
+    )
+
+
+def _generalized_eigvals(A: FloatArray, B: FloatArray) -> FloatArray:
+    try:
+        vals = scipy.linalg.eigvalsh(A, B)
+    except Exception:
+        vals = np.linalg.eigvals(np.linalg.pinv(B) @ A)
+    vals = np.real(vals)
+    return np.sort(np.clip(vals, 0.0, np.inf))
+
+
+def _kappa_liml(X: FloatArray, y: FloatArray, Z: FloatArray) -> float:
+    Xy = np.hstack([X, y])
+    ZTZ_inv = _pinv_sym(Z.T @ Z)
+    Xy_proj = Z @ ZTZ_inv @ Z.T @ Xy
+    Xy_orth = Xy - Xy_proj
+    A = Xy_proj.T @ Xy_proj
+    B = Xy_orth.T @ Xy_orth
+    eigvals = _generalized_eigvals(A, B)
+    ar_min = float(eigvals[0]) if eigvals.size else 0.0
+    return 1.0 + ar_min
+
+
+def _kclass(
+    data: IVData,
+    *,
+    kappa: float,
+    cov_type: CovType = "HC1",
+) -> TSLSResult:
+    y = data.y
+    X = np.hstack([data.x, data.d])
+    Z = np.hstack([data.x, data.z])
+
+    n, p = X.shape
+    df_resid = n - p
+    if df_resid <= 0:
+        raise ValueError("Need n > number of regressors for k-class estimation.")
+
+    ZTZ_inv = _pinv_sym(Z.T @ Z)
+    X_proj = Z @ ZTZ_inv @ Z.T @ X
+    y_proj = Z @ ZTZ_inv @ Z.T @ y
+
+    X_k = (1.0 - kappa) * X + kappa * X_proj
+    beta = np.linalg.solve(X_k.T @ X, X_k.T @ y)
+
+    resid = y - X @ beta
+    resid_proj = y_proj - X_proj @ beta
+
+    if cov_type in ("HC0", "HC1", "HC2", "HC3"):
+        u2 = resid**2
+        meat = X_k.T @ (X_k * u2)
+        V = _pinv_sym(X_k.T @ X) @ meat @ _pinv_sym(X_k.T @ X)
+        if cov_type == "HC1":
+            V *= n / df_resid
+    elif cov_type == "cluster":
+        if data.clusters is None:
+            raise ValueError("Cluster covariance requested but data.clusters is None.")
+        g = np.asarray(data.clusters)
+        uniq, inv = np.unique(g, return_inverse=True)
+        G = int(uniq.size)
+        if G < 2:
+            raise ValueError("cluster covariance requires at least 2 clusters.")
+        meat = np.zeros((p, p), dtype=np.float64)
+        for gi in range(G):
+            idx = inv == gi
+            Xg = X_k[idx, :]
+            eg = resid[idx, :]
+            sg = Xg.T @ eg
+            meat += sg @ sg.T
+        V = _pinv_sym(X_k.T @ X) @ meat @ _pinv_sym(X_k.T @ X)
+        V *= (G / (G - 1)) * ((n - 1) / df_resid)
+    else:
+        raise ValueError(f"Unknown cov_type: {cov_type}")
+
+    se = np.sqrt(np.clip(np.diag(V), 0.0, np.inf)).reshape(-1, 1)
+    return TSLSResult(
+        params=beta,
+        stderr=se,
+        vcov=V,
+        cov_type=str(cov_type),
+        nobs=n,
+        df_resid=df_resid,
+        method=f"kclass({kappa:.4f})",
+    )
+
+
+def liml(
+    data: IVData,
+    *,
+    cov_type: CovType = "HC1",
+) -> TSLSResult:
+    """
+    Limited-information maximum likelihood (LIML) estimator.
+    """
+    X = np.hstack([data.x, data.d])
+    Z = np.hstack([data.x, data.z])
+    kappa = _kappa_liml(X, data.y, Z)
+    res = _kclass(data, kappa=kappa, cov_type=cov_type)
+    return TSLSResult(
+        params=res.params,
+        stderr=res.stderr,
+        vcov=res.vcov,
+        cov_type=res.cov_type,
+        nobs=res.nobs,
+        df_resid=res.df_resid,
+        method="liml",
+    )
+
+
+def fuller(
+    data: IVData,
+    *,
+    alpha: float = 1.0,
+    cov_type: CovType = "HC1",
+) -> TSLSResult:
+    """
+    Fuller estimator with tuning parameter alpha (default 1.0).
+    """
+    X = np.hstack([data.x, data.d])
+    Z = np.hstack([data.x, data.z])
+    kappa_liml = _kappa_liml(X, data.y, Z)
+    dof = data.nobs - Z.shape[1]
+    if dof <= 0:
+        raise ValueError("Need n > number of instruments for Fuller estimator.")
+    kappa = kappa_liml - alpha / dof
+    res = _kclass(data, kappa=kappa, cov_type=cov_type)
+    return TSLSResult(
+        params=res.params,
+        stderr=res.stderr,
+        vcov=res.vcov,
+        cov_type=res.cov_type,
+        nobs=res.nobs,
+        df_resid=res.df_resid,
+        method=f"fuller({alpha})",
     )

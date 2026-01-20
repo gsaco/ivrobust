@@ -30,7 +30,8 @@ def test_cov_ols_unadjusted_shape() -> None:
 def test_cov_ols_cluster() -> None:
     x, resid = _sample_design()
     clusters = np.array([0, 0, 1, 1, 2, 2])
-    res = cov_ols(X=x, resid=resid, cov_type="cluster", clusters=clusters)
+    with pytest.warns(RuntimeWarning):
+        res = cov_ols(X=x, resid=resid, cov_type="cluster", clusters=clusters)
     assert res.cov.shape == (2, 2)
     assert res.n_clusters == 3
 
@@ -61,6 +62,14 @@ def test_cov_ols_cluster_shape_checks() -> None:
     clusters_single = np.zeros(x.shape[0])
     with pytest.raises(ValueError, match="at least 2 clusters"):
         cov_ols(X=x, resid=resid, cov_type="cluster", clusters=clusters_single)
+
+
+def test_cov_ols_hc2_hc3_runs() -> None:
+    x, resid = _sample_design()
+    res_hc2 = cov_ols(X=x, resid=resid, cov_type="HC2")
+    res_hc3 = cov_ols(X=x, resid=resid, cov_type="HC3")
+    assert res_hc2.cov.shape == (2, 2)
+    assert res_hc3.cov.shape == (2, 2)
 
 
 def test_cov_ols_unknown_cov_type() -> None:
