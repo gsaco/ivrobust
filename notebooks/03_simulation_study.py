@@ -19,6 +19,7 @@
 # We run a small Monte Carlo experiment to illustrate how AR test behavior changes with instrument strength.
 #
 # This is a teaching notebook: the goal is reproducibility and interpretation, not exhaustive benchmarking.
+# Set IVROBUST_MC_REPS to increase Monte Carlo repetitions.
 #
 # ## Implementation context (for contributors)
 #
