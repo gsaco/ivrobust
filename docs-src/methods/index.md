@@ -32,6 +32,15 @@ res.tests.keys(), res.confidence_sets.keys()
 
 </div>
 
+## Scope and assumptions
+
+- The weak-IV robust tests in ivrobust target **one endogenous regressor**
+  (`p_endog=1`).
+- Confidence sets are produced by test inversion and can be disjoint or
+  unbounded; report the full union of intervals.
+- Robust covariance options (HC0-HC3 and clustering) apply across tests and
+  diagnostics.
+
 ## Robust covariance and diagnostics
 
 <div class="grid cards iv-grid" markdown>

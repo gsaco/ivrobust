@@ -16,6 +16,13 @@ import ivrobust as ivr
 ivr.set_style()
 ```
 
+The same settings are also available as a Matplotlib style file:
+
+```python
+import matplotlib.pyplot as plt
+plt.style.use("docs-src/assets/ivrobust.mplstyle")
+```
+
 Saving figures:
 
 ```python

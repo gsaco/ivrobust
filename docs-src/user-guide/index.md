@@ -8,6 +8,7 @@ publication-ready plots.
 - How `IVData` structures the model and assumptions.
 - When to prefer AR, LM/K, or CLR inference.
 - How to interpret diagnostics and effective F statistics.
+- How to interpret diagnostics and safe defaults for reporting.
 - How to report set-valued confidence sets and p-value curves.
 
 ## Guide map
@@ -43,6 +44,12 @@ publication-ready plots.
     Effective F, weak-ID diagnostics, and rank tests.
 
     [Read more](diagnostics.md)
+
+-   :material-compass: **Diagnostics & interpretation**
+
+    Practical guidance on reading outputs and avoiding pitfalls.
+
+    [Read more](../diagnostics-interpretation.md)
 
 -   :material-vector-combine: **Many instruments**
 

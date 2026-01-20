@@ -107,6 +107,7 @@ nav:
       - LM/K test: user-guide/lm.md
       - CLR test: user-guide/clr.md
       - Estimators: user-guide/estimators.md
+      - Diagnostics & interpretation: diagnostics-interpretation.md
       - Diagnostics: user-guide/diagnostics.md
       - Many instruments: user-guide/many_instruments.md
       - Plotting: user-guide/plotting.md
@@ -115,6 +116,7 @@ nav:
   - Research:
       - References: references.md
       - Replication: replication.md
+      - Reproducibility: reproducibility.md
       - Parity: parity.md
   - Project:
       - How to cite: how-to-cite.md

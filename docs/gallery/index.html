@@ -603,6 +603,8 @@
       
         
       
+        
+      
     
     
     
@@ -756,6 +758,34 @@
     
   
     Estimators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagnostics-interpretation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostics & interpretation
   
 
     
@@ -939,6 +969,8 @@
       
         
       
+        
+      
     
     
     
@@ -1027,6 +1059,34 @@
     
   
     Replication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reproducibility
   
 
     
@@ -1278,28 +1338,40 @@
 
 
 <h1 id="gallery">Gallery<a class="headerlink" href="#gallery" title="Permanent link">&para;</a></h1>
-<p>Publication-style figures generated directly from ivrobust. All assets are
-reproducible via <code>python scripts/build_docs_assets.py</code>.</p>
+<p>Publication-style figures generated directly from ivrobust. Each figure below
+links to the notebook or script that produces it.</p>
 <div class="grid">
 <figure class="iv-figure">
 <p><img alt="AR confidence set" src="../assets/figures/ar_confidence_set.png" /></p>
 <figcaption>
 AR confidence set with set-valued intervals. [PDF](assets/figures/ar_confidence_set.pdf)
+<br />Source: [00_quickstart.ipynb](https://github.com/gsaco/ivrobust/blob/main/notebooks/00_quickstart.ipynb)
 </figcaption>
 </figure>
 <figure class="iv-figure">
 <p><img alt="Weak-IV p-value curves" src="../assets/figures/pvalue_curve.png" /></p>
 <figcaption>
 AR, LM, and CLR p-values across the beta grid. [PDF](assets/figures/pvalue_curve.pdf)
+<br />Source: [05_clr_in_practice.ipynb](https://github.com/gsaco/ivrobust/blob/main/notebooks/05_clr_in_practice.ipynb)
 </figcaption>
 </figure>
 <figure class="iv-figure">
-<p><img alt="Simulation illustration" src="../assets/figures/simulation_rejection.png" /></p>
+<p><img alt="Robust vs conventional rejection rates" src="../assets/figures/rejection_vs_strength.png" /></p>
 <figcaption>
-Simple simulation of rejection rates across instrument strengths. [PDF](assets/figures/simulation_rejection.pdf)
+Monte Carlo rejection rates across instrument strength (AR vs 2SLS t-test).
+[PDF](assets/figures/rejection_vs_strength.pdf)
+<br />Source: [03_simulation_study.ipynb](https://github.com/gsaco/ivrobust/blob/main/notebooks/03_simulation_study.ipynb)
+</figcaption>
+</figure>
+<figure class="iv-figure">
+<p><img alt="Runtime scaling" src="../assets/figures/runtime_scaling.png" /></p>
+<figcaption>
+Runtime scaling for the unified weak-IV workflow. [PDF](assets/figures/runtime_scaling.pdf)
+<br />Source: [08_runtime_scaling.ipynb](https://github.com/gsaco/ivrobust/blob/main/notebooks/08_runtime_scaling.ipynb)
 </figcaption>
 </figure>
 </div>
+<p>All figures are reproducible via <code>python scripts/build_figures.py</code>.</p>
 
 
 

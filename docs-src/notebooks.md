@@ -1,7 +1,8 @@
 # Notebooks
 
 The notebook suite lives in `notebooks/` (paired `.ipynb` and `.py` via
-Jupytext). Each notebook is reproducible and aligned with the package API.
+Jupytext). Each notebook is reproducible, seeded, and produces multiple
+publication-quality figures.
 
 <div class="grid cards iv-grid" markdown>
 
@@ -25,7 +26,7 @@ Jupytext). Each notebook is reproducible and aligned with the package API.
 
 -   :material-chart-line: **03 Simulation study**
 
-    Simulation checks to understand weak-IV behavior and coverage.
+    Monte Carlo checks for size and robustness under weak instruments.
 
     [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/03_simulation_study.ipynb)
 
@@ -52,6 +53,12 @@ Jupytext). Each notebook is reproducible and aligned with the package API.
     Compare covariance choices and clustering behavior.
 
     [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/07_heteroskedasticity_and_clustering.ipynb)
+
+-   :material-timer: **08 Runtime scaling**
+
+    Lightweight runtime scaling for weak-IV inference grids.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/08_runtime_scaling.ipynb)
 
 </div>
 

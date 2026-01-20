@@ -167,6 +167,25 @@
   max-width: 48rem;
 }
 
+.iv-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.iv-trust {
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  background: var(--ivrobust-surface);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.iv-trust strong {
+  font-family: var(--ivrobust-display-font);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
 .iv-callout {
   padding: 1.2rem 1.4rem;
   border-radius: 16px;
@@ -236,6 +255,24 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+.iv-figure-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.iv-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .iv-pill {
