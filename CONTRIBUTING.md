@@ -39,13 +39,21 @@ pytest
 Docs:
 
 ```bash
-mkdocs build
+mkdocs build --strict
+make docs
 ```
 
 Notebooks (must run top-to-bottom):
 
 ```bash
 pytest --nbmake notebooks/*.ipynb
+```
+
+Figures (docs assets):
+
+```bash
+python scripts/build_figures.py
+make figures
 ```
 
 ## Pull request checklist
