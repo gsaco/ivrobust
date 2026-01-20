@@ -1,18 +1,59 @@
 # Notebooks
 
-The repository ships a reproducible notebook suite in `notebooks/` (both `.py`
-and `.ipynb` via Jupytext). Each notebook includes purpose, literature context,
-and testing/implementation notes.
+The notebook suite lives in `notebooks/` (paired `.ipynb` and `.py` via
+Jupytext). Each notebook is reproducible and aligned with the package API.
 
-Current notebooks:
+<div class="grid cards iv-grid" markdown>
 
-- `notebooks/00_quickstart.ipynb` — Weak instruments in 10 minutes
-- `notebooks/01_core_api.ipynb` — Core API and unified inference
-- `notebooks/02_diagnostics_and_inference.ipynb` — Diagnostics + effective F
-- `notebooks/03_simulation_study.ipynb` — Simulation sanity checks
-- `notebooks/04_real_data_example.ipynb` — Real-data workflow
-- `notebooks/05_clr_in_practice.ipynb` — CLR confidence sets
-- `notebooks/06_lm_in_practice.ipynb` — LM/K confidence sets
-- `notebooks/07_heteroskedasticity_and_clustering.ipynb` — Robust covariance choices
+-   :material-rocket-launch: **00 Quickstart**
 
-Build docs locally with `mkdocs serve` and run notebooks with `pytest --nbmake`.
+    Weak instruments in 10 minutes. Learn the unified API and confidence sets.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/00_quickstart.ipynb)
+
+-   :material-book-open-variant: **01 Core API**
+
+    Data model, estimators, and the main entrypoints for inference.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/01_core_api.ipynb)
+
+-   :material-stethoscope: **02 Diagnostics and inference**
+
+    Effective F, weak-ID diagnostics, and how they inform inference.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/02_diagnostics_and_inference.ipynb)
+
+-   :material-chart-line: **03 Simulation study**
+
+    Simulation checks to understand weak-IV behavior and coverage.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/03_simulation_study.ipynb)
+
+-   :material-domain: **04 Real data example**
+
+    End-to-end workflow on a real dataset with reporting conventions.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_real_data_example.ipynb)
+
+-   :material-chart-bell-curve: **05 CLR in practice**
+
+    CLR confidence sets and diagnostics for applied settings.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/05_clr_in_practice.ipynb)
+
+-   :material-waveform: **06 LM in practice**
+
+    LM/K confidence sets, p-value curves, and workflow patterns.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/06_lm_in_practice.ipynb)
+
+-   :material-vector-combine: **07 Heteroskedasticity and clustering**
+
+    Compare covariance choices and clustering behavior.
+
+    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/07_heteroskedasticity_and_clustering.ipynb)
+
+</div>
+
+!!! note
+    Run notebooks with `pytest --nbmake` and launch locally with JupyterLab.

@@ -1,18 +1,51 @@
 site_name: ivrobust
 site_description: Weak-instrument robust inference for linear IV in Python
+site_url: https://gsaco.github.io/ivrobust/
+site_author: ivrobust contributors
 repo_url: https://github.com/gsaco/ivrobust
 repo_name: gsaco/ivrobust
 edit_uri: edit/main/docs/
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.top
     - navigation.tabs
     - navigation.indexes
+    - navigation.sections
+    - search.suggest
+    - search.highlight
     - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
     - toc.follow
   palette:
     - scheme: default
+      primary: blue grey
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: amber
+      toggle:
+        icon: material/white-balance-sunny
+        name: Switch to light mode
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/gsaco/ivrobust
+      name: ivrobust on GitHub
+  generator: false
 
 plugins:
   - search
@@ -31,22 +64,43 @@ plugins:
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
   - toc:
       permalink: true
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.superfences
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+
+extra_css:
+  - stylesheets/extra.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/extra.js
 
 nav:
   - Home: index.md
-  - Quickstart: quickstart.md
-  - User guide:
-      - user-guide/index.md
+  - Start here:
+      - Quickstart: quickstart.md
+      - User guide: user-guide/index.md
+      - Notebooks: notebooks.md
+  - Methods:
+      - Methods at a glance: methods/index.md
       - Anderson-Rubin inference: user-guide/ar.md
       - LM/K test: user-guide/lm.md
       - CLR test: user-guide/clr.md
@@ -54,11 +108,13 @@ nav:
       - Diagnostics: user-guide/diagnostics.md
       - Many instruments: user-guide/many_instruments.md
       - Plotting: user-guide/plotting.md
-  - Notebooks: notebooks.md
+  - Gallery: gallery.md
   - API reference: reference/api.md
-  - Parity: parity.md
-  - References: references.md
-  - Replication: replication.md
-  - How to cite: how-to-cite.md
-  - Roadmap: roadmap.md
-  - FAQ: faq.md
+  - Research:
+      - References: references.md
+      - Replication: replication.md
+      - Parity: parity.md
+  - Project:
+      - How to cite: how-to-cite.md
+      - Roadmap: roadmap.md
+      - FAQ: faq.md
