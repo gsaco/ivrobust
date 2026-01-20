@@ -15,7 +15,16 @@ res.beta
 
 liml = ivr.liml(data, cov_type="HC1")
 fuller = ivr.fuller(data, alpha=1.0, cov_type="HC1")
+
+fit = ivr.fit(data, estimator="liml", cov_type="HC1")
+fit.params
 ```
+
+Covariance options
+
+- `cov_type="HC0"|"HC1"|"HC2"|"HC3"` for heteroskedasticity-robust SEs
+- `cov_type="cluster"` for one-way cluster robust SEs
+- `cov_type="HAC"` for Newey–West-type SEs (Bartlett kernel, default lags)
 
 ## Model wrapper
 

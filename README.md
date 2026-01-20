@@ -46,6 +46,12 @@ fig, ax = ivr.plot_ar_confidence_set(cs)
 ivr.savefig(fig, "artifacts/ar_confidence_set", formats=("png", "pdf"))
 ```
 
+## API stability (0.x)
+
+The public surface used in this README (`IVData`, `weak_iv_dgp`, `ar_test`,
+`ar_confidence_set`) is treated as stable within the 0.x series. Changes to
+these contracts require deprecation warnings before removal.
+
 ## Citing ivrobust
 
 If you use ivrobust in academic work, please cite it using the metadata in

@@ -5,7 +5,9 @@ from ivrobust import clr_test, lm_test, weak_iv_dgp
 
 
 def test_lm_matches_ivmodels_unadjusted() -> None:
-    iv_lm = pytest.importorskip("ivmodels.tests.lagrange_multiplier")
+    iv_lm = pytest.importorskip(
+        "ivmodels.tests.lagrange_multiplier", exc_type=ImportError
+    )
 
     data, beta_true = weak_iv_dgp(n=300, k=4, strength=0.6, beta=1.2, seed=12)
     beta0 = beta_true
@@ -27,7 +29,9 @@ def test_lm_matches_ivmodels_unadjusted() -> None:
 
 
 def test_clr_matches_ivmodels_unadjusted() -> None:
-    iv_clr = pytest.importorskip("ivmodels.tests.conditional_likelihood_ratio")
+    iv_clr = pytest.importorskip(
+        "ivmodels.tests.conditional_likelihood_ratio", exc_type=ImportError
+    )
 
     data, beta_true = weak_iv_dgp(n=280, k=3, strength=0.5, beta=1.0, seed=5)
     beta0 = beta_true

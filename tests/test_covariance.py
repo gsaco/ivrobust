@@ -76,3 +76,14 @@ def test_cov_ols_unknown_cov_type() -> None:
     x, resid = _sample_design()
     with pytest.raises(ValueError, match="Unknown cov_type"):
         cov_ols(X=x, resid=resid, cov_type="bad")  # type: ignore[arg-type]
+
+
+def test_cov_ols_cluster_invariance() -> None:
+    x, resid = _sample_design()
+    clusters1 = np.array([0, 0, 1, 1, 2, 2])
+    clusters2 = np.array([10, 10, 5, 5, 7, 7])
+    with pytest.warns(RuntimeWarning):
+        res1 = cov_ols(X=x, resid=resid, cov_type="cluster", clusters=clusters1)
+    with pytest.warns(RuntimeWarning):
+        res2 = cov_ols(X=x, resid=resid, cov_type="cluster", clusters=clusters2)
+    assert np.allclose(res1.cov, res2.cov)

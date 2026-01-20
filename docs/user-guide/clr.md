@@ -11,7 +11,7 @@ statistic.
 import ivrobust as ivr
 data, beta_true = ivr.weak_iv_dgp(n=300, k=5, strength=0.4, beta=1.0, seed=0)
 
-res = ivr.clr_test(data, beta0=beta_true, cov_type="HC1")
+res = ivr.clr_test(data, beta0=beta_true, cov_type="HC1", method="CQLR")
 res.statistic, res.pvalue
 
 cs = ivr.clr_confidence_set(data, alpha=0.05, cov_type="HC1")
@@ -21,6 +21,7 @@ cs.confidence_set.intervals
 Notes:
 
 - CLR confidence sets can be disjoint or unbounded under weak instruments.
+- Set `method="CLR"` for homoskedastic CLR; `method="CQLR"` is the robust default.
 - Use `weakiv_inference` to compute AR/LM/CLR tests and sets together.
 - Available covariance types: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"cluster"`.
 

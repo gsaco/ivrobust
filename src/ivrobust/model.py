@@ -1,55 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 
 from ._typing import FloatArray, IntArray
+from .covariance import CovType
 from .data import IVData
-from .diagnostics import effective_f, first_stage_diagnostics
-from .estimators import fuller, liml, tsls
+from .diagnostics.strength import effective_f, first_stage_diagnostics
+from .estimators.fit import fit
+from .estimators.results import IVResults
 from .weakiv import weakiv_inference
-
-
-@dataclass(frozen=True)
-class IVResults:
-    params: FloatArray
-    stderr: FloatArray
-    vcov: FloatArray
-    cov_type: str
-    nobs: int
-    df_resid: int
-    method: str
-    data: IVData
-
-    @property
-    def beta(self) -> float:
-        return float(self.params[-1, 0])
-
-    @property
-    def diagnostics(self) -> dict[str, Any]:
-        return {
-            "first_stage": first_stage_diagnostics(self.data),
-            "effective_f": effective_f(self.data, cov_type=self.cov_type),
-        }
-
-    def weakiv(
-        self,
-        *,
-        methods: tuple[str, ...] = ("AR", "LM", "CLR"),
-        alpha: float = 0.05,
-        cov_type: str | None = None,
-        grid: tuple[float, float, int] | None = None,
-    ):
-        return weakiv_inference(
-            self.data,
-            beta0=self.beta,
-            alpha=alpha,
-            methods=methods,
-            cov_type=self.cov_type if cov_type is None else cov_type,
-            grid=grid,
-        )
 
 
 @dataclass(frozen=True)
@@ -66,7 +28,7 @@ class IVModel:
         *,
         add_const: bool = True,
         clusters: IntArray | None = None,
-    ) -> "IVModel":
+    ) -> IVModel:
         y2 = np.asarray(y, dtype=np.float64)
         d2 = np.asarray(x_endog, dtype=np.float64)
         z2 = np.asarray(z, dtype=np.float64)
@@ -96,24 +58,34 @@ class IVModel:
         data = IVData(y=y2, d=d2, x=x, z=z2, clusters=clusters)
         return cls(data=data)
 
-    def fit(self, *, estimator: str = "2sls", cov_type: str = "HC1", alpha: float = 1.0) -> IVResults:
-        est = estimator.lower()
-        if est in {"2sls", "tsls"}:
-            res = tsls(self.data, cov_type=cov_type)
-        elif est == "liml":
-            res = liml(self.data, cov_type=cov_type)
-        elif est == "fuller":
-            res = fuller(self.data, cov_type=cov_type, alpha=alpha)
-        else:
-            raise ValueError(f"Unknown estimator: {estimator}")
+    def fit(
+        self,
+        *,
+        estimator: Literal["2sls", "liml", "fuller"] = "2sls",
+        cov_type: CovType = "HC1",
+        alpha: float = 1.0,
+    ) -> IVResults:
+        return fit(self.data, estimator=estimator, cov_type=cov_type, alpha=alpha)
 
-        return IVResults(
-            params=res.params,
-            stderr=res.stderr,
-            vcov=res.vcov,
-            cov_type=res.cov_type,
-            nobs=res.nobs,
-            df_resid=res.df_resid,
-            method=res.method,
-            data=self.data,
+    def diagnostics(self) -> dict[str, Any]:
+        return {
+            "first_stage": first_stage_diagnostics(self.data),
+            "effective_f": effective_f(self.data, cov_type="HC1"),
+        }
+
+    def weakiv(
+        self,
+        *,
+        methods: tuple[str, ...] = ("AR", "LM", "CLR"),
+        alpha: float = 0.05,
+        cov_type: CovType | None = None,
+        grid: tuple[float, float, int] | None = None,
+    ) -> Any:
+        return weakiv_inference(
+            self.data,
+            beta0=None,
+            alpha=alpha,
+            methods=methods,
+            cov_type="HC1" if cov_type is None else cov_type,
+            grid=grid,
         )

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from ._typing import FloatArray, IntArray
+from .utils.warnings import WarningCategory, warn
 
 
 @dataclass(frozen=True)
@@ -85,4 +86,19 @@ def validate_iv_arrays(
         p_endog=d2.shape[1],
         k_instr=z2.shape[1],
     )
+    _rank_check(x2, name="x")
+    _rank_check(z2, name="z")
+    _rank_check(np.hstack([x2, z2]), name="x|z")
     return y2, d2, x2, z2, clusters1, shapes
+
+
+def _rank_check(mat: FloatArray, *, name: str) -> None:
+    n, p = mat.shape
+    if n < p:
+        return
+    rank = int(np.linalg.matrix_rank(mat))
+    if rank < p:
+        warn(
+            WarningCategory.RANK_DEFICIENT,
+            f"{name} has rank {rank} < {p}",
+        )

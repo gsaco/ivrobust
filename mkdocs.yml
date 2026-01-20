@@ -52,10 +52,13 @@ nav:
       - CLR test: user-guide/clr.md
       - Estimators: user-guide/estimators.md
       - Diagnostics: user-guide/diagnostics.md
+      - Many instruments: user-guide/many_instruments.md
       - Plotting: user-guide/plotting.md
   - Notebooks: notebooks.md
   - API reference: reference/api.md
+  - Parity: parity.md
   - References: references.md
+  - Replication: replication.md
   - How to cite: how-to-cite.md
   - Roadmap: roadmap.md
   - FAQ: faq.md

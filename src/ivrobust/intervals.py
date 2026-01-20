@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable
 
 import numpy as np
 
@@ -19,10 +19,7 @@ class IntervalSet:
     intervals: list[tuple[float, float]]
 
     def contains(self, x: float) -> bool:
-        for lo, hi in self.intervals:
-            if lo <= x <= hi:
-                return True
-        return False
+        return any(lo <= x <= hi for lo, hi in self.intervals)
 
 
 def invert_pvalue_grid(

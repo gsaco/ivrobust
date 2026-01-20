@@ -13,6 +13,9 @@ data, beta_true = ivr.weak_iv_dgp(n=300, k=4, strength=0.5, beta=1.0, seed=0)
 res = ivr.lm_test(data, beta0=beta_true, cov_type="HC1")
 res.statistic, res.pvalue
 
+rk = ivr.kp_rank_test(data, cov_type="HC1")
+rk.statistic, rk.pvalue
+
 cs = ivr.lm_confidence_set(data, alpha=0.05, cov_type="HC1")
 cs.confidence_set.intervals
 ```

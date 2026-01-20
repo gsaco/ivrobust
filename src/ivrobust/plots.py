@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 
-from .results import ConfidenceSetResult
 from .plot_style import set_style
+from .results import ConfidenceSetResult
 
 
-def plot_ar_confidence_set(cs: ConfidenceSetResult, *, ax=None):
+def plot_ar_confidence_set(
+    cs: ConfidenceSetResult, *, ax: Any | None = None
+) -> tuple[Any, Any]:
     """
     Plot an AR confidence set as horizontal intervals.
 

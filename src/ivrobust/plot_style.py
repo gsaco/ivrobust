@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Iterable
-
+from typing import Any
 
 _STYLE_RC: dict[str, object] = {
     # Figure + axes
@@ -42,7 +42,7 @@ _STYLE_RC: dict[str, object] = {
     "mathtext.fontset": "dejavusans",
 }
 
-def _apply_style(mpl) -> None:
+def _apply_style(mpl: Any) -> None:
     mpl.rcParams.update(_STYLE_RC)
     try:
         from cycler import cycler
@@ -67,7 +67,7 @@ def set_style() -> None:
 
 
 @contextmanager
-def style_context():
+def style_context() -> Iterator[None]:
     """
     Context manager that applies ivrobust style and restores previous rcParams.
     """
@@ -85,7 +85,7 @@ def style_context():
 
 
 def savefig(
-    fig,
+    fig: Any,
     path: str | Path,
     *,
     formats: Iterable[str] = ("png", "pdf"),

@@ -1,17 +1,21 @@
 from __future__ import annotations
 
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 import numpy as np
 
+from ..covariance import CovSpec, CovType
+from ..data import IVData
+from ..diagnostics.strength import (
+    effective_f,
+    first_stage_diagnostics,
+    weak_id_diagnostics,
+)
+from ..estimators.tsls import tsls
+from ..results import ConfidenceSetResult, TestResult, WeakIVInferenceResult
 from .ar import ar_confidence_set, ar_test
 from .clr import clr_confidence_set, clr_test
-from .covariance import CovType
-from .data import IVData
-from .diagnostics import effective_f, first_stage_diagnostics
-from .estimators import tsls
-from .lm import lm_confidence_set, lm_test
-from .results import ConfidenceSetResult, TestResult, WeakIVInferenceResult
+from .lm import kp_rank_test, lm_confidence_set, lm_test
 
 
 def _normalize_methods(methods: Iterable[str]) -> tuple[str, ...]:
@@ -31,6 +35,7 @@ def weakiv_inference(
     beta0: float | Sequence[float] | None = None,
     alpha: float = 0.05,
     methods: Iterable[str] = ("AR", "LM", "CLR"),
+    cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
     grid: np.ndarray | tuple[float, float, int] | None = None,
@@ -60,10 +65,13 @@ def weakiv_inference(
     confidence_sets: dict[str, ConfidenceSetResult] = {}
 
     if "AR" in methods_use:
-        tests["AR"] = ar_test(data, beta0=beta0, cov_type=cov_type)
+        tests["AR"] = ar_test(
+            data, beta0=beta0, cov=cov, cov_type=cov_type, alpha=alpha
+        )
         confidence_sets["AR"] = ar_confidence_set(
             data,
             alpha=alpha,
+            cov=cov,
             cov_type=cov_type,
             grid=grid_array,
             beta_bounds=beta_bounds,
@@ -72,11 +80,12 @@ def weakiv_inference(
 
     if "LM" in methods_use:
         tests["LM"] = lm_test(
-            data, beta0=beta0, cov_type=cov_type, clusters=clusters
+            data, beta0=beta0, cov=cov, cov_type=cov_type, clusters=clusters, alpha=alpha
         )
         confidence_sets["LM"] = lm_confidence_set(
             data,
             alpha=alpha,
+            cov=cov,
             cov_type=cov_type,
             clusters=clusters,
             grid=grid_array,
@@ -86,11 +95,12 @@ def weakiv_inference(
 
     if "CLR" in methods_use:
         tests["CLR"] = clr_test(
-            data, beta0=beta0, cov_type=cov_type, clusters=clusters
+            data, beta0=beta0, cov=cov, cov_type=cov_type, clusters=clusters
         )
         confidence_sets["CLR"] = clr_confidence_set(
             data,
             alpha=alpha,
+            cov=cov,
             cov_type=cov_type,
             clusters=clusters,
             grid=grid_array,
@@ -104,7 +114,11 @@ def weakiv_inference(
 
     diagnostics = {
         "first_stage": first_stage_diagnostics(data),
-        "effective_f": effective_f(data, cov_type=cov_type, clusters=clusters),
+        "effective_f": effective_f(data, cov=cov, cov_type=cov_type, clusters=clusters),
+        "weak_id": weak_id_diagnostics(
+            data, cov=cov, cov_type=cov_type, clusters=clusters
+        ),
+        "kp_rk": kp_rank_test(data, cov=cov, cov_type=cov_type, clusters=clusters),
     }
 
     if not return_grid:
@@ -120,3 +134,15 @@ def weakiv_inference(
         diagnostics=diagnostics,
         warnings=tuple(warnings),
     )
+
+
+__all__ = [
+    "ar_confidence_set",
+    "ar_test",
+    "clr_confidence_set",
+    "clr_test",
+    "kp_rank_test",
+    "lm_confidence_set",
+    "lm_test",
+    "weakiv_inference",
+]

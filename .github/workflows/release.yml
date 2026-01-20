@@ -1,0 +1,28 @@
+name: Release Docs
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  docs-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install (docs)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[docs,plot]"
+
+      - name: Deploy docs
+        run: mkdocs gh-deploy --force

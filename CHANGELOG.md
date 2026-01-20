@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog, and this project adheres to Semantic
 Versioning.
 
+## [Unreleased]
+
+### Added
+- Unified covariance specification (HC/cluster/HAC) and shared covariance engine.
+- Weak-IV inference modules for AR/LM/CLR with shared inversion engine.
+- Diagnostics for effective F, KP rk, Cragg–Donald F, and weak-ID summaries.
+- Estimator suite modules (2SLS/LIML/Fuller/k-class) with `fit` helper.
+- Replication harness with golden tables and scripts.
+- Benchmarks and numeric regression tests.
+
+### Changed
+- Results objects expose intervals/summary helpers and diagnostics export.
+- CI includes multi-OS testing and dependency auditing.
+
 ## [0.2.0] - 2026-01-17
 
 ### Added

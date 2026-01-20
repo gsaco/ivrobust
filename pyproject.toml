@@ -49,11 +49,17 @@ dev = [
   "pre-commit>=3.7",
   "build>=1.2",
   "twine>=5.1",
+  "pip-audit>=2.7",
   "nbmake>=1.5",
   "jupyter>=1.0",
   "ipykernel>=6.29",
   "pandas>=2.0",
   "statsmodels>=0.14",
+]
+parity = [
+  "statsmodels>=0.14",
+  "linearmodels>=5.0",
+  "ivmodels>=0.3",
 ]
 docs = [
   "mkdocs-material>=9.5",
@@ -72,6 +78,8 @@ target-version = "py310"
 line-length = 88
 extend-exclude = [
   "artifacts",
+  "examples",
+  "notebooks",
   "notebooks/.ipynb_checkpoints",
 ]
 
@@ -109,6 +117,7 @@ exclude = "(^docs/|^notebooks/|^examples/)"
 [[tool.mypy.overrides]]
 module = [
   "matplotlib.*",
+  "scipy.*",
   "statsmodels.*",
   "pandas.*",
 ]
@@ -130,6 +139,7 @@ addopts = "-ra -q"
 testpaths = ["tests"]
 filterwarnings = [
   "error",
+  "default::ivrobust.utils.warnings.IVRobustWarning",
   "ignore:.*distutils.*:DeprecationWarning",
 ]
 

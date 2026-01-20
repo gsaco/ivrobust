@@ -4,9 +4,11 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from ._typing import FloatArray
-from .covariance import CovType, cov_reduced_form
+from ._typing import FloatArray, IntArray
+from .covariance import CovSpec, CovType, cov_reduced_form
 from .data import IVData
+from .linalg.ops import proj as _proj
+from .linalg.ops import resid as _resid
 
 
 @dataclass(frozen=True)
@@ -32,48 +34,26 @@ def partial_out(x: FloatArray, *args: FloatArray) -> tuple[FloatArray, ...]:
     """
     if x.size == 0:
         return args
-    X = np.asarray(x, dtype=np.float64)
-    stacked = np.hstack([np.asarray(a, dtype=np.float64) for a in args])
-    coef, *_ = np.linalg.lstsq(X, stacked, rcond=None)
-    fitted = X @ coef
-    resid = stacked - fitted
-
-    outs: list[FloatArray] = []
-    col = 0
-    for arr in args:
-        arr2 = np.asarray(arr, dtype=np.float64)
-        ncols = arr2.shape[1] if arr2.ndim == 2 else 1
-        outs.append(resid[:, col : col + ncols].reshape(arr2.shape))
-        col += ncols
-    return tuple(outs)
+    return tuple(_resid(x, a) for a in args)
 
 
 def proj(z: FloatArray, *args: FloatArray) -> tuple[FloatArray, ...]:
     """
     Project each array in args onto the column space of z.
     """
-    Z = np.asarray(z, dtype=np.float64)
-    if Z.size == 0:
+    if z.size == 0:
         return tuple(np.zeros_like(a) for a in args)
-    stacked = np.hstack([np.asarray(a, dtype=np.float64) for a in args])
-    coef, *_ = np.linalg.lstsq(Z, stacked, rcond=None)
-    fitted = Z @ coef
-
-    outs: list[FloatArray] = []
-    col = 0
-    for arr in args:
-        arr2 = np.asarray(arr, dtype=np.float64)
-        ncols = arr2.shape[1] if arr2.ndim == 2 else 1
-        outs.append(fitted[:, col : col + ncols].reshape(arr2.shape))
-        col += ncols
-    return tuple(outs)
+    return tuple(_proj(z, a) for a in args)
 
 
 def reduced_form(
     data: IVData,
     *,
-    cov_type: CovType,
+    cov_type: CovType = "HC1",
     clusters: IntArray | None = None,
+    cov: CovSpec | str | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> ReducedFormResult:
     """
     Compute reduced-form coefficients and covariance for scalar endogenous regressor.
@@ -93,10 +73,10 @@ def reduced_form(
     coef, *_ = np.linalg.lstsq(Z, YD, rcond=None)
     resid = YD - Z @ coef
 
-    pi_y = coef[:, [0]]
-    pi_d = coef[:, [1]]
-    resid_y = resid[:, [0]]
-    resid_d = resid[:, [1]]
+    pi_y = coef[:, [0]].astype(np.float64)
+    pi_d = coef[:, [1]].astype(np.float64)
+    resid_y = resid[:, [0]].astype(np.float64)
+    resid_d = resid[:, [1]].astype(np.float64)
 
     clusters_use = clusters if clusters is not None else data.clusters
     cov_res = cov_reduced_form(
@@ -105,6 +85,9 @@ def reduced_form(
         resid_d=resid_d,
         cov_type=cov_type,
         clusters=clusters_use,
+        cov=cov,
+        hac_lags=hac_lags,
+        kernel=kernel,
         df_resid_adj=data.nobs - data.k_instr - data.p_exog,
     )
 

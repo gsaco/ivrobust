@@ -5,36 +5,35 @@ from typing import Any
 
 import numpy as np
 
-from ._typing import FloatArray, IntArray
-from ._validation import Shapes, validate_iv_arrays
+from .._typing import FloatArray, IntArray
+from .._validation import Shapes, validate_iv_arrays
+from .clusters import normalize_clusters
+from .design import add_constant
 
 
 @dataclass(frozen=True)
 class IVData:
     """
-    Container for a linear IV dataset with a fixed matrix layout.
+    Canonical container for linear IV data with a fixed matrix layout.
 
-    Parameters
+    Array shapes
+    -----------
+    y : (n, 1)
+        Outcome vector (single column).
+    d : (n, p_endog)
+        Endogenous regressors. Weak-IV robust tests target p_endog=1.
+    x : (n, p_exog)
+        Exogenous regressors. Include an intercept column if desired.
+    z : (n, k_instr)
+        Excluded instruments.
+    clusters : (n,)
+        Optional cluster labels for cluster-robust covariance.
+
+    Validation
     ----------
-    y
-        Outcome vector with shape (n, 1).
-    d
-        Endogenous regressors with shape (n, p_endog).
-        The current weak-IV robust inference in ivrobust targets the scalar case
-        p_endog=1.
-    x
-        Exogenous regressors with shape (n, p_exog). Include an intercept column
-        if desired.
-    z
-        Excluded instruments with shape (n, k_instr).
-    clusters
-        Optional 1D array of length n with cluster identifiers for cluster-robust
-        covariance.
-
-    Notes
-    -----
-    - ivrobust expects the intercept (if used) to be included explicitly in `x`.
-    - Input validation rejects NaN/inf and inconsistent shapes.
+    - Arrays are coerced to float64 (or int64 for clusters).
+    - NaN/inf values are rejected.
+    - All inputs must have the same number of rows.
     """
 
     y: FloatArray
@@ -48,12 +47,52 @@ class IVData:
         y2, d2, x2, z2, c1, shapes = validate_iv_arrays(
             y=self.y, d=self.d, x=self.x, z=self.z, clusters=self.clusters
         )
+        if c1 is not None:
+            c1 = normalize_clusters(c1, nobs=shapes.n).codes[0]
         object.__setattr__(self, "y", y2)
         object.__setattr__(self, "d", d2)
         object.__setattr__(self, "x", x2)
         object.__setattr__(self, "z", z2)
         object.__setattr__(self, "clusters", c1)
         object.__setattr__(self, "shapes", shapes)
+
+    @classmethod
+    def from_arrays(
+        cls,
+        *,
+        y: FloatArray,
+        d: FloatArray,
+        z: FloatArray,
+        x: FloatArray | None = None,
+        add_const: bool = True,
+        clusters: IntArray | None = None,
+    ) -> IVData:
+        """
+        Construct IVData from raw arrays with explicit keyword-only inputs.
+        """
+        y2 = np.asarray(y, dtype=np.float64)
+        d2 = np.asarray(d, dtype=np.float64)
+        z2 = np.asarray(z, dtype=np.float64)
+
+        if y2.ndim == 1:
+            y2 = y2.reshape(-1, 1)
+        if d2.ndim == 1:
+            d2 = d2.reshape(-1, 1)
+        if z2.ndim == 1:
+            z2 = z2.reshape(-1, 1)
+
+        if x is None:
+            if not add_const:
+                raise ValueError("x is None and add_const=False.")
+            x2 = np.ones((y2.shape[0], 1), dtype=np.float64)
+        else:
+            x2 = np.asarray(x, dtype=np.float64)
+            if x2.ndim == 1:
+                x2 = x2.reshape(-1, 1)
+            if add_const:
+                x2 = add_constant(x2)
+
+        return cls(y=y2, d=d2, x=x2, z=z2, clusters=clusters)
 
     @property
     def nobs(self) -> int:
@@ -75,7 +114,7 @@ class IVData:
         assert self.shapes is not None
         return self.shapes.p_exog
 
-    def with_clusters(self, clusters: np.ndarray) -> "IVData":
+    def with_clusters(self, clusters: np.ndarray) -> IVData:
         return IVData(y=self.y, d=self.d, x=self.x, z=self.z, clusters=clusters)
 
     def as_dict(self) -> dict[str, Any]:
@@ -99,39 +138,6 @@ def weak_iv_dgp(
 ) -> tuple[IVData, float]:
     """
     Generate a synthetic linear IV dataset with one endogenous regressor.
-
-    Model
-    -----
-    d = Z pi + v
-    y = beta d + u
-
-    where (u, v) are correlated to induce endogeneity.
-
-    Parameters
-    ----------
-    n
-        Number of observations.
-    k
-        Number of excluded instruments.
-    strength
-        Controls first-stage strength via pi magnitude (roughly scales the
-        concentration).
-    beta
-        True structural coefficient on d.
-    seed
-        Random seed for reproducibility.
-    rho
-        Corr(u, v). Must satisfy |rho| < 1.
-
-    Returns
-    -------
-    data, beta_true
-        IVData with intercept-only exogenous regressors and the true beta.
-
-    Notes
-    -----
-    This DGP is intended for teaching, testing, and Monte Carlo diagnostics. It
-    is not a substitute for application-specific simulation design.
     """
     if n <= 5:
         raise ValueError("n must be > 5.")
@@ -149,13 +155,11 @@ def weak_iv_dgp(
     z = rng.standard_normal(size=(n, k))
     x = np.ones((n, 1), dtype=np.float64)
 
-    # Scale pi so that increasing k does not mechanically inflate the first stage.
     pi = (strength / np.sqrt(k)) * np.ones((k, 1), dtype=np.float64)
 
     e1 = rng.standard_normal(size=(n, 1))
     e2 = rng.standard_normal(size=(n, 1))
 
-    # Correlated structural shocks (u, v)
     u = e1
     v = rho * e1 + np.sqrt(1.0 - rho**2) * e2
 
