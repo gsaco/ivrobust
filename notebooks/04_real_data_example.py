@@ -127,3 +127,21 @@ cs.confidence_set.intervals
 # %%
 fig, ax = ivr.plot_ar_confidence_set(cs)
 ivr.savefig(fig, ART / "ar_confidence_set", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## P-value curve for AR/LM/CLR
+#
+# Visualize weak-IV p-values over a beta grid.
+
+# %%
+weakiv_grid = ivr.weakiv_inference(
+    data,
+    beta0=beta_hat,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+    grid=(beta_hat - 2.0, beta_hat + 2.0, 301),
+    return_grid=True,
+)
+fig, ax = weakiv_grid.plot()
+ivr.savefig(fig, ART / "pvalue_curve", formats=("png", "pdf"))

@@ -31,7 +31,9 @@
 
 # %%
 from pathlib import Path
+import os
 import numpy as np
+from scipy.stats import norm
 import ivrobust as ivr
 
 ART = Path("artifacts") / "03_simulation_study"
@@ -42,20 +44,27 @@ ivr.set_style()
 
 # %%
 strength_grid = [0.1, 0.2, 0.4, 0.8]
-R = 200
+R = int(os.getenv("IVROBUST_MC_REPS", "120"))
 n = 300
 k = 5
 beta_true = 1.0
 alpha = 0.05
 
 reject_rates = []
+tsls_rates = []
 for s in strength_grid:
-    rej = 0
+    ar_rej = 0
+    tsls_rej = 0
     for r in range(R):
         data, _ = ivr.weak_iv_dgp(n=n, k=k, strength=s, beta=beta_true, seed=r)
         ar = ivr.ar_test(data, beta0=beta_true, cov_type="HC1")
-        rej += int(ar.pvalue < alpha)
-    reject_rates.append(rej / R)
+        ar_rej += int(ar.pvalue < alpha)
+        tsls = ivr.tsls(data, cov_type="HC1")
+        t_stat = (tsls.beta - beta_true) / tsls.stderr[-1, 0]
+        tsls_pval = 2.0 * norm.sf(abs(float(t_stat)))
+        tsls_rej += int(tsls_pval < alpha)
+    reject_rates.append(ar_rej / R)
+    tsls_rates.append(tsls_rej / R)
 
 reject_rates
 
@@ -77,3 +86,19 @@ ax.set_xlabel("first-stage strength (DGP parameter)")
 ax.set_ylabel(r"AR rejection rate at true $\beta$")
 ax.set_title("Monte Carlo illustration (should be near size)")
 ivr.savefig(fig, ART / "ar_rejection_rates", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## Robust vs conventional rejection rates
+#
+# Compare AR (robust) to a conventional 2SLS Wald test.
+
+# %%
+fig, ax = plt.subplots(figsize=(6.2, 3.8))
+ax.plot(strength_grid, reject_rates, marker="o", label="AR (robust)")
+ax.plot(strength_grid, tsls_rates, marker="s", label="2SLS t-test")
+ax.axhline(alpha, color="black", linestyle="--", linewidth=1.0)
+ax.set_xlabel("first-stage strength (DGP parameter)")
+ax.set_ylabel("Rejection rate at true beta")
+ax.set_title("Robust vs conventional size behavior")
+ax.legend(frameon=False)
+ivr.savefig(fig, ART / "robust_vs_conventional", formats=("png", "pdf"))

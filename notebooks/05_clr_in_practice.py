@@ -70,3 +70,10 @@ res.confidence_sets["CLR"].confidence_set.intervals
 # %%
 fig, ax = res.plot(methods=("AR", "CLR"))
 ivr.savefig(fig, ART / "clr_pvalues", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## CLR confidence set shape
+
+# %%
+fig, ax = res.confidence_sets["CLR"].plot()
+ivr.savefig(fig, ART / "clr_confidence_set", formats=("png", "pdf"))

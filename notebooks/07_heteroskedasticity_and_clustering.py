@@ -71,3 +71,59 @@ hc.tests["AR"].pvalue, cl.tests["AR"].pvalue
 
 # %%
 hc.diagnostics["effective_f"], cl.diagnostics["effective_f"]
+
+# %% [markdown]
+# ## P-value curves: HC1 vs cluster
+
+# %%
+import matplotlib.pyplot as plt
+
+hc_grid = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR",),
+    cov_type="HC1",
+    grid=(beta_true - 2.0, beta_true + 2.0, 301),
+    return_grid=True,
+)
+cl_grid = ivr.weakiv_inference(
+    data_clustered,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR",),
+    cov_type="cluster",
+    grid=(beta_true - 2.0, beta_true + 2.0, 301),
+    return_grid=True,
+)
+
+fig, ax = plt.subplots(figsize=(6.2, 3.8))
+ax.plot(
+    hc_grid.confidence_sets["AR"].grid_info["grid"],
+    hc_grid.confidence_sets["AR"].grid_info["pvalues"],
+    label="HC1",
+)
+ax.plot(
+    cl_grid.confidence_sets["AR"].grid_info["grid"],
+    cl_grid.confidence_sets["AR"].grid_info["pvalues"],
+    label="Cluster",
+)
+ax.axhline(0.05, color="black", linestyle="--", linewidth=1.0)
+ax.set_xlabel(r"$\beta$")
+ax.set_ylabel("AR p-value")
+ax.set_title("Covariance choice and AR p-values")
+ax.legend(frameon=False)
+ivr.savefig(fig, ART / "covariance_pvalues", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## Effective F comparison
+
+# %%
+eff_hc = hc.diagnostics["effective_f"].statistic
+eff_cl = cl.diagnostics["effective_f"].statistic
+
+fig, ax = plt.subplots(figsize=(4.8, 3.4))
+ax.bar(["HC1", "Cluster"], [eff_hc, eff_cl])
+ax.set_ylabel("Effective F")
+ax.set_title("Instrument strength under clustering")
+ivr.savefig(fig, ART / "effective_f_comparison", formats=("png", "pdf"))

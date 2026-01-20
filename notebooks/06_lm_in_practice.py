@@ -66,3 +66,10 @@ res.confidence_sets["LM"].confidence_set.intervals
 # %%
 fig, ax = res.plot(methods=("AR", "LM"))
 ivr.savefig(fig, ART / "lm_pvalues", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## LM confidence set shape
+
+# %%
+fig, ax = res.confidence_sets["LM"].plot()
+ivr.savefig(fig, ART / "lm_confidence_set", formats=("png", "pdf"))

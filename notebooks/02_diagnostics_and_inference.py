@@ -53,6 +53,23 @@ eff = ivr.effective_f(data, cov_type="HC1")
 eff
 
 # %% [markdown]
+# ## Diagnostic summary plot
+#
+# Compare classical first-stage F and effective F side-by-side.
+
+# %%
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.2))
+axes[0].bar(["First-stage F", "Effective F"], [diag.f_statistic, eff.statistic])
+axes[0].set_ylabel("Statistic")
+axes[0].set_title("Instrument strength diagnostics")
+axes[1].bar(["Partial R^2"], [diag.partial_r2])
+axes[1].set_ylim(0.0, 1.0)
+axes[1].set_title("Partial R^2")
+ivr.savefig(fig, ART / "diagnostics_summary", formats=("png", "pdf"))
+
+# %% [markdown]
 # A low first-stage F-statistic and partial R^2 indicate weak instruments. In
 # this regime, conventional standard errors can be misleading, so we rely on AR
 # inference for valid statements about beta.

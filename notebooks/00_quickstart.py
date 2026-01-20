@@ -76,3 +76,21 @@ cs.confidence_set.intervals
 # %%
 fig, ax = ivr.plot_ar_confidence_set(cs)
 ivr.savefig(fig, ART / "ar_confidence_set", formats=("png", "pdf"))
+
+# %% [markdown]
+# ## P-value curve
+#
+# Plot p-values across a beta grid to visualize how acceptance changes.
+
+# %%
+res_grid = ivr.weakiv_inference(
+    data,
+    beta0=beta_true,
+    alpha=0.05,
+    methods=("AR", "LM", "CLR"),
+    cov_type="HC1",
+    grid=(beta_true - 2.0, beta_true + 2.0, 301),
+    return_grid=True,
+)
+fig, ax = res_grid.plot()
+ivr.savefig(fig, ART / "pvalue_curve", formats=("png", "pdf"))
