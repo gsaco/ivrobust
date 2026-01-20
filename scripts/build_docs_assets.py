@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import ivrobust as ivr
 
 
-OUTPUT_DIR = Path("docs/assets/figures")
+OUTPUT_DIR = Path("docs-src/assets/figures")
 
 
 def build_ar_confidence_set() -> None:

@@ -2,9 +2,11 @@ site_name: ivrobust
 site_description: Weak-instrument robust inference for linear IV in Python
 site_url: https://gsaco.github.io/ivrobust/
 site_author: ivrobust contributors
+docs_dir: docs-src
+site_dir: docs
 repo_url: https://github.com/gsaco/ivrobust
 repo_name: gsaco/ivrobust
-edit_uri: edit/main/docs/
+edit_uri: edit/main/docs-src/
 
 theme:
   name: material
@@ -57,7 +59,7 @@ plugins:
             show_source: false
             show_signature_annotations: true
   - bibtex:
-      bib_file: "docs/references.bib"
+      bib_file: "docs-src/references.bib"
   - mkdocs-jupyter:
       include_source: true
       execute: false
