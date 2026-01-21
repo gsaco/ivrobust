@@ -64,8 +64,17 @@ class IVModel:
         estimator: Literal["2sls", "liml", "fuller"] = "2sls",
         cov_type: CovType = "HC1",
         alpha: float = 1.0,
+        hac_lags: int | None = None,
+        kernel: str = "bartlett",
     ) -> IVResults:
-        return fit(self.data, estimator=estimator, cov_type=cov_type, alpha=alpha)
+        return fit(
+            self.data,
+            estimator=estimator,
+            cov_type=cov_type,
+            alpha=alpha,
+            hac_lags=hac_lags,
+            kernel=kernel,
+        )
 
     def diagnostics(self) -> dict[str, Any]:
         return {
@@ -80,6 +89,8 @@ class IVModel:
         alpha: float = 0.05,
         cov_type: CovType | None = None,
         grid: tuple[float, float, int] | None = None,
+        hac_lags: int | None = None,
+        kernel: str = "bartlett",
     ) -> Any:
         return weakiv_inference(
             self.data,
@@ -88,4 +99,6 @@ class IVModel:
             methods=methods,
             cov_type="HC1" if cov_type is None else cov_type,
             grid=grid,
+            hac_lags=hac_lags,
+            kernel=kernel,
         )

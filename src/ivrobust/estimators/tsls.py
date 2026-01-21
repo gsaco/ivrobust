@@ -15,6 +15,8 @@ def tsls(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> TSLSResult:
     """
     Two-stage least squares estimation for a single endogenous regressor.
@@ -46,12 +48,16 @@ def tsls(
         cov_type=cov_type,
         clusters=clusters if clusters is not None else data.clusters,
         cov=cov,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
     B = X.T @ Z @ cov_z.cov @ Z.T @ X
     V = A_inv @ B @ A_inv
 
     se = np.sqrt(np.clip(np.diag(V), 0.0, np.inf)).reshape(-1, 1)
     cov_config: dict[str, Any] = {}
+    if str(cov_type).upper() == "HAC":
+        cov_config = {"hac_lags": hac_lags, "kernel": kernel}
     return IVResults(
         params=beta,
         stderr=se,

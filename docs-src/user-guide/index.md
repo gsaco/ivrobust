@@ -63,4 +63,28 @@ publication-ready plots.
 
     [Read more](plotting.md)
 
+-   :material-directions: **Choosing a method**
+
+    Decision table for AR/LM/CLR selection and covariance regimes.
+
+    [Read more](choosing.md)
+
+-   :material-route: **Workflow**
+
+    Estimate -> diagnose -> test -> confidence set workflow.
+
+    [Read more](workflow.md)
+
+-   :material-shield-check: **Covariance choices**
+
+    HC, cluster, and HAC options and what they change.
+
+    [Read more](covariance.md)
+
+-   :material-numeric: **Numerics**
+
+    Grid inversion, edge cases, and stability considerations.
+
+    [Read more](numerics.md)
+
 </div>

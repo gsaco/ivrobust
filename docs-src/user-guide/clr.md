@@ -5,6 +5,27 @@ weak-IV robust test with strong finite-sample properties. Its p-values are
 computed from a nonstandard distribution that depends on a concentration
 statistic.
 
+## Purpose
+
+CLR is a weak-IV robust test with strong power properties among invariant tests,
+especially in overidentified models.
+
+## Statistic and conditioning
+
+CLR compares the likelihood under the null to the best-fitting reduced-form
+model and uses a conditional critical value that depends on a concentration
+statistic.
+
+## Algorithm
+
+1. Compute reduced-form coefficients and covariance.
+2. Form CLR quadratic forms and the concentration statistic.
+3. Evaluate the conditional p-value and invert over beta for confidence sets.
+
+## Confidence set behavior
+
+CLR confidence sets are obtained by inversion and can be disjoint or unbounded.
+
 ## In ivrobust
 
 ```python
@@ -23,7 +44,7 @@ Notes:
 - CLR confidence sets can be disjoint or unbounded under weak instruments.
 - Set `method="CLR"` for homoskedastic CLR; `method="CQLR"` is the robust default.
 - Use `weakiv_inference` to compute AR/LM/CLR tests and sets together.
-- Available covariance types: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"cluster"`.
+- Available covariance types: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"cluster"`, `"HAC"`.
 
 References:
 

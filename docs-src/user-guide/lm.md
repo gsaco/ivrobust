@@ -4,6 +4,28 @@ The Lagrange Multiplier (LM) or Kleibergen–Paap K test is a weak-IV robust sco
 test for a scalar structural parameter. It has a chi-square(1) asymptotic
 distribution under weak instruments.
 
+## Purpose
+
+LM/K provides a score-based alternative to AR. It can have higher power in some
+settings while retaining weak-ID robustness.
+
+## Statistic
+
+The LM statistic uses the score of the reduced-form likelihood (or its
+minimum-distance analog) evaluated at the null. In ivrobust it is implemented
+as the Kleibergen–Paap LM statistic for a scalar endogenous regressor.
+
+## Algorithm
+
+1. Residualize $y$, $d$, and $z$ with respect to $x$.
+2. Form the score and information terms under $H_0$.
+3. Compute the LM statistic and p-value under $\chi^2_1$.
+
+## Interpretation
+
+LM can be more powerful than AR under some designs but can behave similarly in
+very weak-ID settings.
+
 ## In ivrobust
 
 ```python
@@ -25,6 +47,7 @@ Notes:
 - LM confidence sets can be disjoint or unbounded under weak instruments.
 - Use `cov_type="cluster"` for one-way clustering (requires `data.clusters`).
 - Available covariance types: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"cluster"`.
+- Use `cov_type="HAC"` with `hac_lags` and `kernel` for serial correlation.
 
 References:
 

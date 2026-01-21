@@ -1,66 +1,63 @@
 # Notebooks
 
 The notebook suite lives in `notebooks/` (paired `.ipynb` and `.py` via
-Jupytext). Each notebook is reproducible, seeded, and produces multiple
-publication-quality figures.
+Jupytext). The documentation renders a curated subset inline and links to the
+full directory for additional materials.
+
+## Featured notebooks (rendered here)
 
 <div class="grid cards iv-grid" markdown>
 
 -   :material-rocket-launch: **00 Quickstart**
 
-    Weak instruments in 10 minutes. Learn the unified API and confidence sets.
+    Weak instruments in 10 minutes. Unified API, confidence sets, and plots.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/00_quickstart.ipynb)
+    [Open notebook](00_quickstart/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/00_quickstart.ipynb)
 
--   :material-book-open-variant: **01 Core API**
+-   :material-compass: **01 Practitioner workflow (single endog)**
 
-    Data model, estimators, and the main entrypoints for inference.
+    End-to-end applied workflow with AR/LM/CLR tests and confidence sets.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/01_core_api.ipynb)
+    [Open notebook](01_practitioner_workflow_single_endog/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/01_practitioner_workflow_single_endog.ipynb)
 
 -   :material-stethoscope: **02 Diagnostics and inference**
 
-    Effective F, weak-ID diagnostics, and how they inform inference.
+    Effective F, weak-ID diagnostics, and interpretation guidance.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/02_diagnostics_and_inference.ipynb)
+    [Open notebook](02_diagnostics_and_inference/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/02_diagnostics_and_inference.ipynb)
 
--   :material-chart-line: **03 Simulation study**
+-   :material-vector-combine: **04 Many instruments bias**
 
-    Monte Carlo checks for size and robustness under weak instruments.
+    TSLS vs LIML vs Fuller bias and RMSE as k/n grows.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/03_simulation_study.ipynb)
+    [Open notebook](04_many_instruments_bias_tsls_liml_fuller/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_many_instruments_bias_tsls_liml_fuller.ipynb)
 
 -   :material-domain: **04 Real data example**
 
-    End-to-end workflow on a real dataset with reporting conventions.
+    Real-data IV workflow with robust inference and plots.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_real_data_example.ipynb)
-
--   :material-chart-bell-curve: **05 CLR in practice**
-
-    CLR confidence sets and diagnostics for applied settings.
-
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/05_clr_in_practice.ipynb)
-
--   :material-waveform: **06 LM in practice**
-
-    LM/K confidence sets, p-value curves, and workflow patterns.
-
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/06_lm_in_practice.ipynb)
-
--   :material-vector-combine: **07 Heteroskedasticity and clustering**
-
-    Compare covariance choices and clustering behavior.
-
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/07_heteroskedasticity_and_clustering.ipynb)
+    [Open notebook](04_real_data_example/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_real_data_example.ipynb)
 
 -   :material-timer: **08 Runtime scaling**
 
-    Lightweight runtime scaling for weak-IV inference grids.
+    Lightweight runtime checks for grid inversion and inference.
 
-    [Open notebook](https://github.com/gsaco/ivrobust/blob/main/notebooks/08_runtime_scaling.ipynb)
+    [Open notebook](08_runtime_scaling/)
+    [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/08_runtime_scaling.ipynb)
 
 </div>
 
+## Full notebook index
+
+Additional notebooks (core API, CLR/LM in practice, robust covariance, and more)
+live in the repository:
+
+- [notebooks/ on GitHub](https://github.com/gsaco/ivrobust/tree/main/notebooks)
+
 !!! note
-    Run notebooks with `pytest --nbmake` and launch locally with JupyterLab.
+    Execute notebooks with `pytest --nbmake notebooks/*.ipynb`.

@@ -2,11 +2,12 @@
 # jupyter:
 #   jupytext:
 #     formats: ipynb,py:percent
+#     notebook_metadata_filter: jupytext,kernelspec,language_info
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.18.1
+#       jupytext_version: 1.16.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -70,6 +71,9 @@ axes[1].set_title("Partial R^2")
 ivr.savefig(fig, ART / "diagnostics_summary", formats=("png", "pdf"))
 
 # %% [markdown]
+# ![Diagnostics summary](artifacts/02_diagnostics_and_inference/diagnostics_summary.png)
+
+# %% [markdown]
 # A low first-stage F-statistic and partial R^2 indicate weak instruments. In
 # this regime, conventional standard errors can be misleading, so we rely on AR
 # inference for valid statements about beta.
@@ -107,3 +111,6 @@ weakiv.confidence_sets["AR"].confidence_set.intervals
 # %%
 fig, ax = ivr.plot_ar_confidence_set(weakiv.confidence_sets["AR"])
 ivr.savefig(fig, ART / "ar_confidence_set", formats=("png", "pdf"))
+
+# %% [markdown]
+# ![AR confidence set](artifacts/02_diagnostics_and_inference/ar_confidence_set.png)

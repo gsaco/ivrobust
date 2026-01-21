@@ -4,6 +4,11 @@ The Anderson-Rubin (AR) approach performs inference on a structural parameter by
 testing whether excluded instruments predict the null-implied residual. This
 yields tests that remain valid under weak instruments.
 
+## Purpose
+
+AR provides weak-IV robust inference on a scalar structural parameter. It
+remains correctly sized even when instruments are weak.
+
 ## Model and null
 
 Consider a linear IV model with one endogenous regressor $d$:
@@ -26,6 +31,38 @@ The AR regression is:
 
 and the AR test is a joint test that coefficients on $z$ are zero.
 
+## Test statistic
+
+Let $r(\beta_0) = y - \beta_0 d$. The AR statistic is the (robust) Wald test of
+the coefficients on $z$ in the regression of $r(\beta_0)$ on $[x, z]$.
+
+## Algorithm
+
+1. Residualize $y$, $d$, and $z$ with respect to $x$.
+2. Form $r(\beta_0) = y - \beta_0 d$.
+3. Compute the robust covariance for moments $z r(\beta_0)$.
+4. Form the Wald statistic and p-value under $\chi^2_k$.
+
+## Confidence set by inversion
+
+The $(1-\alpha)$ confidence set is:
+
+\[
+CS_{1-\alpha} = \{\beta : p_{AR}(\beta) \ge \alpha\}.
+\]
+
+Intervals may be empty, unbounded, or disjoint.
+
+## Interpretation
+
+Wide or unbounded sets indicate weak identification: the data contain limited
+information about $\beta$.
+
+## Pitfalls / numerics
+
+- Grid bounds can affect numerical inversion; use wide bounds in weak-ID cases.
+- Discontinuities in p-values can create union intervals; report them directly.
+
 ## In ivrobust
 
 ```python
@@ -36,8 +73,9 @@ res = ivr.ar_test(data, beta0=beta_true, cov_type="HC1")
 res.statistic, res.pvalue
 ```
 
-Covariance options: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, and
-`"cluster"` (one-way clustering with `data.clusters`).
+Covariance options: `"unadjusted"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`,
+`"cluster"` (one-way clustering with `data.clusters`), and `"HAC"` (Newey-West
+with `hac_lags` and `kernel`).
 
 Confidence sets return a `ConfidenceSetResult` with a union-of-intervals object:
 

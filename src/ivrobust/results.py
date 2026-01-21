@@ -82,18 +82,15 @@ class ConfidenceSetResult:
 
     @property
     def is_empty(self) -> bool:
-        return len(self.intervals) == 0
+        return self.confidence_set.is_empty
 
     @property
     def is_unbounded(self) -> bool:
-        return any(
-            (not (lo > float("-inf")) or not (hi < float("inf")))
-            for lo, hi in self.intervals
-        )
+        return self.confidence_set.is_unbounded
 
     @property
     def is_disjoint(self) -> bool:
-        return len(self.intervals) > 1
+        return self.confidence_set.is_disjoint
 
     @property
     def grid_diagnostics(self) -> dict[str, Any]:

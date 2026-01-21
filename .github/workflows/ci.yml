@@ -143,7 +143,7 @@ jobs:
           python -m pip install -e ".[docs,plot]"
 
       - name: Build docs
-        run: mkdocs build --strict
+        run: make docs
 
       - name: Link check
         run: python scripts/check_links.py --site-dir docs

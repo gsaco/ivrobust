@@ -45,6 +45,8 @@ def _kclass_cov(
     *,
     cov_type: CovType,
     clusters: np.ndarray | None,
+    hac_lags: int | None,
+    kernel: str,
 ) -> np.ndarray:
     X2 = np.asarray(Xk, dtype=np.float64)
     r = np.asarray(resid, dtype=np.float64).reshape(-1, 1)
@@ -73,8 +75,8 @@ def _kclass_cov(
         return meat
 
     if cov_type == "HAC":
-        lags = _default_hac_lags(n)
-        return _hac_meat(X=X2, resid1=r, resid2=r, lags=lags, kernel="bartlett")
+        lags = _default_hac_lags(n) if hac_lags is None else int(hac_lags)
+        return _hac_meat(X=X2, resid1=r, resid2=r, lags=lags, kernel=kernel)
 
     w = r**2
     return cast(np.ndarray, X2.T @ (X2 * w))
@@ -87,6 +89,8 @@ def kclass(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> IVResults:
     _ = cov
     y = data.y
@@ -115,6 +119,8 @@ def kclass(
         resid,
         cov_type=cov_type,
         clusters=clusters if clusters is not None else data.clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
     V = A_inv @ meat @ A_inv
     if cov_type == "HC1":
@@ -129,12 +135,15 @@ def kclass(
         V *= (G / (G - 1)) * ((n - 1) / df_resid)
 
     se = np.sqrt(np.clip(np.diag(V), 0.0, np.inf)).reshape(-1, 1)
+    cov_config: dict[str, object] = {}
+    if str(cov_type).upper() == "HAC":
+        cov_config = {"hac_lags": hac_lags, "kernel": kernel}
     return IVResults(
         params=beta,
         stderr=se,
         vcov=V,
         cov_type=str(cov_type),
-        cov_config={},
+        cov_config=cov_config,
         nobs=n,
         df_resid=df_resid,
         k_endog=data.p_endog,
@@ -152,11 +161,21 @@ def liml(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> IVResults:
     X = np.hstack([data.x, data.d])
     Z = np.hstack([data.x, data.z])
     kappa = _kappa_liml(X, data.y, Z)
-    res = kclass(data, kappa=kappa, cov=cov, cov_type=cov_type, clusters=clusters)
+    res = kclass(
+        data,
+        kappa=kappa,
+        cov=cov,
+        cov_type=cov_type,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+    )
     return IVResults(
         params=res.params,
         stderr=res.stderr,
@@ -181,6 +200,8 @@ def fuller(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> IVResults:
     X = np.hstack([data.x, data.d])
     Z = np.hstack([data.x, data.z])
@@ -189,7 +210,15 @@ def fuller(
     if dof <= 0:
         raise ValueError("Need n > number of instruments for Fuller estimator.")
     kappa = kappa_liml - alpha / dof
-    res = kclass(data, kappa=kappa, cov=cov, cov_type=cov_type, clusters=clusters)
+    res = kclass(
+        data,
+        kappa=kappa,
+        cov=cov,
+        cov_type=cov_type,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+    )
     return IVResults(
         params=res.params,
         stderr=res.stderr,

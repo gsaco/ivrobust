@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-this-matters" class="md-skip">
+        <a href="#weak-iv-robust-inference-for-modern-econometrics" class="md-skip">
           Skip to content
         </a>
       
@@ -292,6 +292,28 @@
   
   
   
+    
+    
+      <li class="md-tabs__item">
+        <a href="notebooks/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
     <li class="md-tabs__item">
       <a href="gallery/" class="md-tabs__link">
         
@@ -311,17 +333,20 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="reference/api/" class="md-tabs__link">
-        
+    
+    
+      <li class="md-tabs__item">
+        <a href="reference/api/" class="md-tabs__link">
+          
   
   
     
   
   API reference
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -426,6 +451,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -468,6 +495,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -476,10 +505,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
+  <a href="#the-weak-instrument-problem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why this matters
+        The Weak Instrument Problem
       
     </span>
   </a>
@@ -487,10 +516,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#trust-and-reproducibility" class="md-nav__link">
+  <a href="#core-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Trust and reproducibility
+        Core Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anderson-rubin-ar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anderson-Rubin (AR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lagrange-multiplier-lmk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lagrange Multiplier (LM/K)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-likelihood-ratio-clr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Likelihood Ratio (CLR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Example
       
     </span>
   </a>
@@ -498,24 +577,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods-at-a-glance" class="md-nav__link">
+  <a href="#practitioner-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Methods at a glance
+        Practitioner Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practitioner Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-prepare-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Prepare Data
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#featured-demos" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-diagnose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Featured demos
+        2. Diagnose
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -523,7 +641,7 @@
   <a href="#gallery-highlights" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gallery highlights
+        Gallery Highlights
       
     </span>
   </a>
@@ -531,10 +649,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-here" class="md-nav__link">
+  <a href="#research-team" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start here
+        Research Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Research Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gabriel-saco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gabriel Saco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-ivrobust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing ivrobust
       
     </span>
   </a>
@@ -542,13 +699,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reproducible-by-design" class="md-nav__link">
+  <a href="#trust-reproducibility" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproducible by design
+        Trust &amp; Reproducibility
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Trust &amp; Reproducibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reproducible-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproducible Figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clear Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -572,9 +768,11 @@
         
       
         
-          
+      
         
       
+        
+          
         
       
     
@@ -658,22 +856,20 @@
               
             
               
-            
-              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="notebooks/" class="md-nav__link">
+      <a href="user-guide/workflow/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Notebooks
+    Practitioner workflow
   
 
     
@@ -685,6 +881,36 @@
     </li>
   
 
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="user-guide/choosing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Choosing a method
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
               
             
           </ul>
@@ -705,6 +931,10 @@
       
         
           
+        
+      
+        
+      
         
       
         
@@ -952,6 +1182,62 @@
   
   
     <li class="md-nav__item">
+      <a href="user-guide/covariance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Covariance choices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="user-guide/numerics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numerical stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="user-guide/many_instruments/" class="md-nav__link">
         
   
@@ -1014,6 +1300,277 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notebook gallery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/00_quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ivrobust - Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/01_practitioner_workflow_single_endog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practitioner workflow (single endogenous regressor)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/02_diagnostics_and_inference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostics and inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/04_many_instruments_bias_tsls_liml_fuller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Many instruments: bias in TSLS vs LIML vs Fuller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/04_real_data_example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Real data example (open dataset)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/08_runtime_scaling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime scaling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="gallery/" class="md-nav__link">
         
@@ -1041,9 +1598,33 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="reference/api/" class="md-nav__link">
+    
+    
+      
         
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1057,7 +1638,107 @@
   
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/stable_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stable API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/results_objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Result objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1092,10 +1773,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
   
@@ -1113,8 +1794,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1258,6 +1939,8 @@
       
         
       
+        
+      
     
     
     
@@ -1271,10 +1954,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
             
   
   
@@ -1292,8 +1975,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1318,6 +2001,34 @@
     
   
     How to cite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maintainers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintainer guide
   
 
     
@@ -1411,6 +2122,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1419,10 +2132,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
+  <a href="#the-weak-instrument-problem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why this matters
+        The Weak Instrument Problem
       
     </span>
   </a>
@@ -1430,10 +2143,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#trust-and-reproducibility" class="md-nav__link">
+  <a href="#core-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Trust and reproducibility
+        Core Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anderson-rubin-ar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anderson-Rubin (AR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lagrange-multiplier-lmk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lagrange Multiplier (LM/K)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-likelihood-ratio-clr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Likelihood Ratio (CLR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Example
       
     </span>
   </a>
@@ -1441,24 +2204,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods-at-a-glance" class="md-nav__link">
+  <a href="#practitioner-workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Methods at a glance
+        Practitioner Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practitioner Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-prepare-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Prepare Data
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#featured-demos" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#2-diagnose" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Featured demos
+        2. Diagnose
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1466,7 +2268,7 @@
   <a href="#gallery-highlights" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gallery highlights
+        Gallery Highlights
       
     </span>
   </a>
@@ -1474,10 +2276,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-here" class="md-nav__link">
+  <a href="#research-team" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start here
+        Research Team
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Research Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gabriel-saco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gabriel Saco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#citing-ivrobust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Citing ivrobust
       
     </span>
   </a>
@@ -1485,13 +2326,52 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reproducible-by-design" class="md-nav__link">
+  <a href="#trust-reproducibility" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproducible by design
+        Trust &amp; Reproducibility
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Trust &amp; Reproducibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reproducible-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproducible Figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clear Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1528,182 +2408,260 @@
   
 
 
-  <h1>Home</h1>
-
-<div class="iv-hero">
-<div>
-
-<span class="iv-hero__eyebrow">Weak-IV robust inference in Python</span>
-
-# ivrobust keeps inference credible when instruments are weak.
-
-<div class="iv-hero__lead">
-Research-grade Anderson-Rubin, LM/K, and CLR inference with robust covariance
-options, set-valued confidence sets, and diagnostics aligned with modern
-weak-instrument guidance.
+<div class="ivr-hero">
+<p><span class="ivr-hero__badge">
+<span class="emoji">🔬</span> Research-Grade Econometrics
+</span></p>
+<h1 class="ivr-hero__title" id="weak-iv-robust-inference-for-modern-econometrics">Weak-IV Robust Inference for Modern Econometrics<a class="headerlink" href="#weak-iv-robust-inference-for-modern-econometrics" title="Permanent link">&para;</a></h1>
+<p class="ivr-hero__subtitle">
+A Python library implementing Anderson-Rubin, LM/K, and CLR tests with robust covariance options, 
+set-valued confidence sets, and comprehensive diagnostics. Built by researchers, for researchers.
+</p>
+<div class="ivr-hero__actions">
+<a href="quickstart/" class="md-button md-button--primary">Get Started</a>
+<a href="reference/api/" class="md-button">API Reference</a>
+<a href="https://github.com/gsaco/ivrobust" class="md-button">View on GitHub</a>
 </div>
-<div class="iv-hero__actions">
-
-[Quickstart](quickstart.md){ .md-button .md-button--primary }
-[User guide](user-guide/index.md){ .md-button }
-[Notebooks](notebooks.md){ .md-button }
-
-</div>
-<div class="iv-hero__stats">
-<div class="iv-stat"><strong>AR / LM / CLR</strong><br />Unified weak-IV workflow.</div>
-<div class="iv-stat"><strong>Robust covariance</strong><br />HC0-HC3 and clustering.</div>
-<div class="iv-stat"><strong>Set-valued CIs</strong><br />Disjoint intervals supported.</div>
+<div class="ivr-hero__features">
+<div class="ivr-feature">
+<div class="ivr-feature__icon">⚖️</div>
+<div class="ivr-feature__text">
+<strong>Weak-IV Robust</strong>
+<span>Valid inference under weak identification</span>
 </div>
 </div>
-<div class="iv-hero__code">
+<div class="ivr-feature">
+<div class="ivr-feature__icon">📊</div>
+<div class="ivr-feature__text">
+<strong>Set-Valued CIs</strong>
+<span>Disjoint and unbounded intervals supported</span>
+</div>
+</div>
+<div class="ivr-feature">
+<div class="ivr-feature__icon">🛡️</div>
+<div class="ivr-feature__text">
+<strong>Robust Covariance</strong>
+<span>HC0-HC3, clustering, and HAC options</span>
+</div>
+</div>
+</div>
+</div>
+<div class="ivr-badge-row">
+<a href="https://github.com/gsaco/ivrobust/actions/workflows/ci.yml"><img src="https://github.com/gsaco/ivrobust/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+<img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10+">
+<img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
+</div>
+
+<hr />
+<section class="ivr-section">
+<h2 id="the-weak-instrument-problem">The Weak Instrument Problem<a class="headerlink" href="#the-weak-instrument-problem" title="Permanent link">&para;</a></h2>
+<figure class="ivr-figure">
+<p><img alt="Weak vs Strong IV Inference" src="assets/figures/hero_concept.png" /></p>
+<figcaption>
+<strong>Figure 1: The identification challenge.</strong> 
+Strong instruments yield precise estimates (blue), while weak instruments create wide, unreliable confidence regions (coral). 
+ivrobust provides tests that remain valid regardless of instrument strength.
+</figcaption>
+</figure>
+<div class="ivr-callout ivr-callout--accent">
+<p><strong>Why this matters:</strong> Standard IV inference (2SLS t-tests) can be severely distorted when instruments are weak. 
+The Anderson-Rubin, LM, and CLR tests implemented in ivrobust maintain correct size even under weak identification,
+following the guidance of <sup id="fnref:andrews2019"><a class="footnote-ref" href="#fn:andrews2019">1</a></sup> and modern weak-IV econometrics.</p>
+</div>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="core-methods">Core Methods<a class="headerlink" href="#core-methods" title="Permanent link">&para;</a></h2>
+<figure class="ivr-figure">
+<p><img alt="Method Overview" src="assets/figures/method_overview.png" /></p>
+<figcaption>
+<strong>Figure 2: ivrobust methodology.</strong> 
+Three complementary approaches to weak-IV robust inference, each with distinct properties and use cases.
+</figcaption>
+</figure>
+<div class="ivr-methods-grid">
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">⚖️</div>
+<h3 id="anderson-rubin-ar">Anderson-Rubin (AR)<a class="headerlink" href="#anderson-rubin-ar" title="Permanent link">&para;</a></h3>
+<p>The foundational weak-IV robust test. Inverts the joint test on instruments 
+for confidence sets that are valid regardless of instrument strength.</p>
+<div class="ivr-method-card__equation">
+AR(β₀) = (Y - Xβ₀)'Pz(Y - Xβ₀) / s²
+</div>
+<p><span class="ivr-method-card__cite">📚 Anderson &amp; Rubin (1949)</span></p>
+</div>
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">📈</div>
+<h3 id="lagrange-multiplier-lmk">Lagrange Multiplier (LM/K)<a class="headerlink" href="#lagrange-multiplier-lmk" title="Permanent link">&para;</a></h3>
+<p>Kleibergen's score-based test with optimal local power. Uses the score function 
+under the null hypothesis for efficient weak-IV robust inference.</p>
+<div class="ivr-method-card__equation">
+LM(β₀) = S(β₀)'Ω⁻¹S(β₀)
+</div>
+<p><span class="ivr-method-card__cite">📚 Kleibergen (2002)</span></p>
+</div>
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">📊</div>
+<h3 id="conditional-likelihood-ratio-clr">Conditional Likelihood Ratio (CLR)<a class="headerlink" href="#conditional-likelihood-ratio-clr" title="Permanent link">&para;</a></h3>
+<p>Moreira's conditional test combining AR and LM statistics. Achieves near-optimal 
+power while maintaining weak-IV robustness through conditioning.</p>
+<div class="ivr-method-card__equation">
+CLR(β₀) = ½(AR - rk + √((AR - rk)² + 4·LM·rk))
+</div>
+<p><span class="ivr-method-card__cite">📚 Moreira (2003)</span></p>
+</div>
+</div>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">ivrobust</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ivr</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">data</span><span class="p">,</span> <span class="n">beta_true</span> <span class="o">=</span> <span class="n">ivr</span><span class="o">.</span><span class="n">weak_iv_dgp</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">res</span> <span class="o">=</span> <span class="n">ivr</span><span class="o">.</span><span class="n">weakiv_inference</span><span class="p">(</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">data</span><span class="p">,</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">beta0</span><span class="o">=</span><span class="n">beta_true</span><span class="p">,</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;AR&quot;</span><span class="p">,</span> <span class="s2">&quot;LM&quot;</span><span class="p">,</span> <span class="s2">&quot;CLR&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">cov_type</span><span class="o">=</span><span class="s2">&quot;HC1&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">)</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">tests</span><span class="p">[</span><span class="s2">&quot;AR&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pvalue</span><span class="p">)</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">confidence_sets</span><span class="p">[</span><span class="s2">&quot;CLR&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Generate synthetic weak-IV data</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">data</span><span class="p">,</span> <span class="n">beta_true</span> <span class="o">=</span> <span class="n">ivr</span><span class="o">.</span><span class="n">weak_iv_dgp</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">strength</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Run weak-IV robust inference</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">res</span> <span class="o">=</span> <span class="n">ivr</span><span class="o">.</span><span class="n">weakiv_inference</span><span class="p">(</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">beta0</span><span class="o">=</span><span class="n">beta_true</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;AR&quot;</span><span class="p">,</span> <span class="s2">&quot;LM&quot;</span><span class="p">,</span> <span class="s2">&quot;CLR&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">cov_type</span><span class="o">=</span><span class="s2">&quot;HC1&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Access test results</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AR p-value: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">tests</span><span class="p">[</span><span class="s1">&#39;AR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pvalue</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CLR confidence set: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">confidence_sets</span><span class="p">[</span><span class="s1">&#39;CLR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">intervals</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="ivr-button-row">
+<a href="quickstart/" class="md-button md-button--primary">Full Quickstart Guide</a>
+<a href="notebooks/" class="md-button">Interactive Notebooks</a>
+</div>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="practitioner-workflow">Practitioner Workflow<a class="headerlink" href="#practitioner-workflow" title="Permanent link">&para;</a></h2>
+<div class="ivr-workflow">
+<div class="ivr-workflow__step">
+<div class="ivr-workflow__icon">📁</div>
+<h4 id="1-prepare-data">1. Prepare Data<a class="headerlink" href="#1-prepare-data" title="Permanent link">&para;</a></h4>
+<p>Structure your IV model with IVData</p>
+</div>
+<div class="ivr-workflow__step">
+<div class="ivr-workflow__icon">🔍</div>
+<h4 id="2-diagnose">2. Diagnose<a class="headerlink" href="#2-diagnose" title="Permanent link">&para;</a></h4>
+<p>Check instrument strength with diagnostics</p>
+</div>
+<div class="ivr-workflow__step">
+<div class="ivr-workflow__icon">✓</div>
+<h4 id="3-test">3. Test<a class="headerlink" href="#3-test" title="Permanent link">&para;</a></h4>
+<p>Run AR/LM/CLR tests at your hypothesis</p>
+</div>
+<div class="ivr-workflow__step">
+<div class="ivr-workflow__icon">📈</div>
+<h4 id="4-report">4. Report<a class="headerlink" href="#4-report" title="Permanent link">&para;</a></h4>
+<p>Generate publication-ready figures</p>
+</div>
+</div>
+<p><a href="user-guide/workflow/" class="md-button">Complete Workflow Guide →</a></p>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="gallery-highlights">Gallery Highlights<a class="headerlink" href="#gallery-highlights" title="Permanent link">&para;</a></h2>
+<div class="ivr-gallery">
+<figure class="ivr-figure">
+<p><img alt="P-value curves" src="assets/figures/pvalue_curve.png" /></p>
+<figcaption>
+<strong>P-value curves across the parameter space.</strong>
+AR, LM, and CLR p-values showing where the null hypothesis is rejected.
+</figcaption>
+</figure>
+<figure class="ivr-figure">
+<p><img alt="Rejection rates" src="assets/figures/rejection_vs_strength.png" /></p>
+<figcaption>
+<strong>Monte Carlo rejection rates.</strong>
+AR maintains correct size while 2SLS t-test over-rejects under weak instruments.
+</figcaption>
+</figure>
+</div>
+<p><a href="gallery/" class="md-button">View Full Gallery →</a></p>
+</section>
+<hr />
+<section class="ivr-section ivr-team-section">
+<h2 id="research-team">Research Team<a class="headerlink" href="#research-team" title="Permanent link">&para;</a></h2>
+<p class="section-lead">
+ivrobust is developed and maintained by researchers committed to rigorous, reproducible econometric software.
+</p>
+<div class="ivr-team-grid">
+<div class="ivr-team-card">
+<div class="ivr-team-card__avatar">GS</div>
+<div class="ivr-team-card__info">
+<h4 id="gabriel-saco">Gabriel Saco<a class="headerlink" href="#gabriel-saco" title="Permanent link">&para;</a></h4>
+<p>Lead Developer • Econometrics Research</p>
+</div>
+</div>
+<div class="ivr-team-card">
+<div class="ivr-team-card__avatar">+</div>
+<div class="ivr-team-card__info">
+<h4 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permanent link">&para;</a></h4>
+<p>Open source community</p>
+</div>
+</div>
+</div>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="citing-ivrobust">Citing ivrobust<a class="headerlink" href="#citing-ivrobust" title="Permanent link">&para;</a></h2>
+<div class="ivr-citation-block">
+<p><span class="ivr-citation-block__label">📄 BibTeX</span></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nc">@software</span><span class="p">{</span><span class="nl">ivrobust</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{ivrobust: Weak-IV Robust Inference in Python}</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Saco, Gabriel and contributors}</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="na">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://github.com/gsaco/ivrobust}</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="na">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{0.2.0}</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
 </code></pre></div>
 </div>
+<p>When using ivrobust, please also cite the methodological references for the specific 
+tests you employ (see <a href="references/">References</a>).</p>
+</section>
+<hr />
+<section class="ivr-section">
+<h2 id="trust-reproducibility">Trust &amp; Reproducibility<a class="headerlink" href="#trust-reproducibility" title="Permanent link">&para;</a></h2>
+<div class="ivr-methods-grid">
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">🔄</div>
+<h3 id="continuous-integration">Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h3>
+<p>All commits are tested against a comprehensive suite including linting, 
+type checks, unit tests, notebook execution, and documentation builds.</p>
 </div>
-<section class="iv-section">
-<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
-<div class="iv-callout">
-<p>Weak instruments invalidate classical IV inference. ivrobust keeps tests valid
-under weak identification, reports diagnostics alongside inference, and produces
-publication-quality figures with a single, consistent plotting style.</p>
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">🎯</div>
+<h3 id="reproducible-figures">Reproducible Figures<a class="headerlink" href="#reproducible-figures" title="Permanent link">&para;</a></h3>
+<p>Every figure in the documentation is generated from committed code with 
+fixed random seeds, ensuring full reproducibility.</p>
+</div>
+<div class="ivr-method-card">
+<div class="ivr-method-card__icon">📖</div>
+<h3 id="clear-scope">Clear Scope<a class="headerlink" href="#clear-scope" title="Permanent link">&para;</a></h3>
+<p>Focused implementation of weak-IV robust inference for a single endogenous 
+regressor with comprehensive documentation and examples.</p>
+</div>
 </div>
 </section>
-<section class="iv-section">
-<h2 id="trust-and-reproducibility">Trust and reproducibility<a class="headerlink" href="#trust-and-reproducibility" title="Permanent link">&para;</a></h2>
-<div class="iv-trust-grid">
-<div class="iv-trust">
-<p><strong>Continuous integration</strong></p>
-<p>CI runs linting, type checks, unit tests, notebook execution, docs builds, and
-link checks on pushes to <code>main</code>.</p>
+<hr />
+<div class="ivr-button-row" style="justify-content: center; margin-top: 3rem;">
+<a href="quickstart/" class="md-button md-button--primary">Get Started →</a>
+<a href="user-guide/" class="md-button">User Guide</a>
+<a href="reference/api/" class="md-button">API Reference</a>
 </div>
-<div class="iv-trust">
-<p><strong>Reproducible figures</strong></p>
-<p>Every figure on the site is generated by committed code and fixed seeds.</p>
-</div>
-<div class="iv-trust">
-<p><strong>Clear scope</strong></p>
-<p>Weak-IV robust inference is implemented for a single endogenous regressor with
-set-valued confidence sets.</p>
-</div>
-</div>
-</section>
-<section class="iv-section">
-<h2 id="methods-at-a-glance">Methods at a glance<a class="headerlink" href="#methods-at-a-glance" title="Permanent link">&para;</a></h2>
-<div class="grid cards iv-grid">
-<ul>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"/></svg></span> <strong>Anderson-Rubin (AR)</strong></p>
-<p>Invert the joint test on instruments for weak-IV robust inference and
-confidence sets. <sup id="fnref:anderson1949"><a class="footnote-ref" href="#fn:anderson1949">1</a></sup><sup id="fnref:andrews2019"><a class="footnote-ref" href="#fn:andrews2019">2</a></sup></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg></span> <strong>LM/K test</strong></p>
-<p>Kleibergen-Paap LM statistics for scalar structural parameters with robust
-covariance support. <sup id="fnref:kleibergen2002"><a class="footnote-ref" href="#fn:kleibergen2002">3</a></sup></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.96 11.31C10.82 8.1 11.5 6 13 6s2.18 2.1 3.04 5.31C17 14.92 18.1 19 22 19v-2c-2.2 0-3-2.46-4.03-6.2C17.08 7.46 16.15 4 13 4s-4.08 3.46-4.97 6.8C7.03 14.54 6.2 17 4 17V2H2v20h20v-2H4v-1c3.9 0 5-4.08 5.96-7.69"/></svg></span> <strong>CLR / CQLR</strong></p>
-<p>Conditional likelihood ratio inference with grid inversion for confidence
-sets. <sup id="fnref:moreira2003"><a class="footnote-ref" href="#fn:moreira2003">4</a></sup></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 1c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h4v4c0 1.11.89 2 2 2h11c1.11 0 2-.89 2-2V9c0-1.11-.89-2-2-2h-4V3c0-1.11-.89-2-2-2zm0 2h11v4H9c-1.11 0-2 .89-2 2v5H3zm6 6h5v5H9zm7 0h4v11H9v-4h5c1.11 0 2-.89 2-2z"/></svg></span> <strong>Set-valued confidence sets</strong></p>
-<p>Disjoint or unbounded intervals are allowed and reported explicitly. <sup id="fnref:mikusheva2010"><a class="footnote-ref" href="#fn:mikusheva2010">5</a></sup></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m10 17-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9m-6-8L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg></span> <strong>Robust covariance</strong></p>
-<p>HC0-HC3 and one-way clustering for reliable inference under heteroskedasticity.
-<sup id="fnref:finlay2009"><a class="footnote-ref" href="#fn:finlay2009">6</a></sup></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8c.56 0 1 .43 1 1a1 1 0 0 1-1 1c-.57 0-1-.45-1-1 0-.57.43-1 1-1M2 2v9c0 2.96 2.19 5.5 5.14 5.91.62 3.01 3.28 5.09 6.36 5.09a6.5 6.5 0 0 0 6.5-6.5v-3.69c1.16-.42 2-1.52 2-2.81a3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 1.29.84 2.4 2 2.81v3.6c0 2.5-2 4.5-4.5 4.5-2 0-3.68-1.21-4.28-3.01C12 16.3 14 13.8 14 11V2h-4v3h2v6a4 4 0 0 1-4 4 4 4 0 0 1-4-4V5h2V2z"/></svg></span> <strong>Diagnostics</strong></p>
-<p>Effective F, KP-rk, and weak-ID diagnostics for instrument strength.
-<sup id="fnref:montielolea2013"><a class="footnote-ref" href="#fn:montielolea2013">7</a></sup></p>
-</li>
-</ul>
-</div>
-</section>
-<section class="iv-section">
-<h2 id="featured-demos">Featured demos<a class="headerlink" href="#featured-demos" title="Permanent link">&para;</a></h2>
-<div class="iv-button-row">
 
-[Quickstart](quickstart.md){ .md-button .md-button--primary }
-[Diagnostics](diagnostics-interpretation.md){ .md-button }
-[Gallery](gallery.md){ .md-button }
-
-</div>
-</section>
-<section class="iv-section">
-<h2 id="gallery-highlights">Gallery highlights<a class="headerlink" href="#gallery-highlights" title="Permanent link">&para;</a></h2>
-<div class="iv-figure-grid">
-<figure class="iv-figure">
-<p><img alt="Robust vs conventional rejection rates" src="assets/figures/rejection_vs_strength.png" /></p>
-<figcaption>Monte Carlo rejection rates across instrument strength.</figcaption>
-</figure>
-<figure class="iv-figure">
-<p><img alt="Weak-IV p-value curves" src="assets/figures/pvalue_curve.png" /></p>
-<figcaption>AR, LM, and CLR p-values across the beta grid.</figcaption>
-</figure>
-<figure class="iv-figure">
-<p><img alt="Runtime scaling" src="assets/figures/runtime_scaling.png" /></p>
-<figcaption>Runtime scaling for the unified weak-IV workflow.</figcaption>
-</figure>
-</div>
-<p>Explore the full <a href="gallery/">Gallery</a> for additional figures and captions.</p>
-</section>
-<section class="iv-section">
-<h2 id="start-here">Start here<a class="headerlink" href="#start-here" title="Permanent link">&para;</a></h2>
-<div class="iv-button-row">
-
-[Quickstart](quickstart.md){ .md-button .md-button--primary }
-[User guide](user-guide/index.md){ .md-button }
-[Notebooks](notebooks.md){ .md-button }
-
-</div>
-</section>
-<section class="iv-section">
-<h2 id="reproducible-by-design">Reproducible by design<a class="headerlink" href="#reproducible-by-design" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Deterministic data generators for weak-IV benchmarks.</li>
-<li>Figures saved with ivrobust plotting conventions for papers and reports.</li>
-<li>Notebooks curated for applied workflows and reproducibility checks.</li>
-</ul>
-</section>
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:anderson1949">
-<p>T. W. Anderson and Herman Rubin. Estimation of the parameters of a single equation in a complete system of stochastic equations. <em>The Annals of Mathematical Statistics</em>, 20(1):46–63, 1949. <a href="https://doi.org/10.1214/aoms/1177730090">doi:10.1214/aoms/1177730090</a>.&#160;<a class="footnote-backref" href="#fnref:anderson1949" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
 <li id="fn:andrews2019">
-<p>Isaiah Andrews, James H. Stock, and Liyang Sun. Weak instruments in instrumental variables regression: theory and practice. <em>Annual Review of Economics</em>, 2019. <a href="https://doi.org/10.1146/annurev-economics-080218-025643">doi:10.1146/annurev-economics-080218-025643</a>.&#160;<a class="footnote-backref" href="#fnref:andrews2019" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:kleibergen2002">
-<p>Frank Kleibergen. Pivotal statistics for testing structural parameters in instrumental variables regression. <em>Econometrica</em>, 70(5):1781–1803, 2002. <a href="https://doi.org/10.1111/1468-0262.00353">doi:10.1111/1468-0262.00353</a>.&#160;<a class="footnote-backref" href="#fnref:kleibergen2002" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:moreira2003">
-<p>Marcelo J. Moreira. A conditional likelihood ratio test for structural models. <em>Econometrica</em>, 71(4):1027–1048, 2003. <a href="https://doi.org/10.1111/1468-0262.00438">doi:10.1111/1468-0262.00438</a>.&#160;<a class="footnote-backref" href="#fnref:moreira2003" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-<li id="fn:mikusheva2010">
-<p>Anna Mikusheva. Robust confidence sets in the presence of weak instruments. <em>Journal of Econometrics</em>, 157(2):236–247, 2010. <a href="https://doi.org/10.1016/j.jeconom.2009.12.003">doi:10.1016/j.jeconom.2009.12.003</a>.&#160;<a class="footnote-backref" href="#fnref:mikusheva2010" title="Jump back to footnote 5 in the text">&#8617;</a></p>
-</li>
-<li id="fn:finlay2009">
-<p>Keith Finlay and Leandro M. Magnusson. Implementing weak-instrument robust tests for a general class of instrumental-variables models. <em>The Stata Journal</em>, 9(3):398–421, 2009. <a href="https://doi.org/10.1177/1536867X0900900304">doi:10.1177/1536867X0900900304</a>.&#160;<a class="footnote-backref" href="#fnref:finlay2009" title="Jump back to footnote 6 in the text">&#8617;</a></p>
-</li>
-<li id="fn:montielolea2013">
-<p>Jose Luis Montiel Olea and Carolin E. Pflueger. A robust test for weak instruments. <em>Journal of Business &amp; Economic Statistics</em>, 31(3):358–369, 2013. <a href="https://doi.org/10.1080/00401706.2013.806694">doi:10.1080/00401706.2013.806694</a>.&#160;<a class="footnote-backref" href="#fnref:montielolea2013" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p>Isaiah Andrews, James H. Stock, and Liyang Sun. Weak instruments in instrumental variables regression: theory and practice. <em>Annual Review of Economics</em>, 2019. <a href="https://doi.org/10.1146/annurev-economics-080218-025643">doi:10.1146/annurev-economics-080218-025643</a>.&#160;<a class="footnote-backref" href="#fnref:andrews2019" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

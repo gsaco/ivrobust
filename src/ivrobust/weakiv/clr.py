@@ -108,6 +108,8 @@ def clr_test(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     method: Literal["CLR", "CQLR"] = "CQLR",
     tol: float = 1e-6,
 ) -> CLRTestResult:
@@ -130,7 +132,12 @@ def clr_test(
             cov_use = None
 
     rf = reduced_form(
-        data, cov_type=cov_type_use, cov=cov_use, clusters=clusters, kernel="bartlett"
+        data,
+        cov_type=cov_type_use,
+        cov=cov_use,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
 
     k = rf.k_instr
@@ -160,6 +167,9 @@ def clr_test(
         cov_type=str(cov_type_use)
         if cov_use is None
         else str(getattr(cov_use, "cov_type", cov_use)),
+        cov_config={"hac_lags": hac_lags, "kernel": kernel}
+        if str(cov_type_use).upper() == "HAC"
+        else {},
         warnings=tuple(warnings),
         details={"beta0": b0, "lambda1": float(lambda1)},
     )
@@ -172,6 +182,8 @@ def clr_confidence_set(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     method: Literal["CLR", "CQLR"] = "CQLR",
     grid: np.ndarray | None = None,
     beta_bounds: tuple[float, float] | None = None,
@@ -202,6 +214,8 @@ def clr_confidence_set(
             cov=cov,
             cov_type=cov_type,
             clusters=clusters,
+            hac_lags=hac_lags,
+            kernel=kernel,
             method=method,
             tol=tol,
         ).pvalue,
@@ -209,7 +223,15 @@ def clr_confidence_set(
         grid_spec=grid_spec,
         inversion_spec=inversion_spec,
     )
-    grid_info.update({"cov_type": str(cov_type), "df": data.k_instr, "method": method})
+    grid_info.update(
+        {
+            "cov_type": str(cov_type),
+            "df": data.k_instr,
+            "method": method,
+            "hac_lags": hac_lags,
+            "kernel": kernel,
+        }
+    )
     return ConfidenceSetResult(
         confidence_set=cs, alpha=alpha, method=method.upper(), grid_info=grid_info
     )

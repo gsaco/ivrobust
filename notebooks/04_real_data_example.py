@@ -2,11 +2,12 @@
 # jupyter:
 #   jupytext:
 #     formats: ipynb,py:percent
+#     notebook_metadata_filter: jupytext,kernelspec,language_info
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.18.1
+#       jupytext_version: 1.16.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -129,6 +130,9 @@ fig, ax = ivr.plot_ar_confidence_set(cs)
 ivr.savefig(fig, ART / "ar_confidence_set", formats=("png", "pdf"))
 
 # %% [markdown]
+# ![AR confidence set](artifacts/04_real_data_example/ar_confidence_set.png)
+
+# %% [markdown]
 # ## P-value curve for AR/LM/CLR
 #
 # Visualize weak-IV p-values over a beta grid.
@@ -145,3 +149,6 @@ weakiv_grid = ivr.weakiv_inference(
 )
 fig, ax = weakiv_grid.plot()
 ivr.savefig(fig, ART / "pvalue_curve", formats=("png", "pdf"))
+
+# %% [markdown]
+# ![P-value curve](artifacts/04_real_data_example/pvalue_curve.png)

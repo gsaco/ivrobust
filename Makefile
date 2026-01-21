@@ -1,9 +1,12 @@
-.PHONY: docs serve figures notebooks links
+.PHONY: docs serve figures notebooks links sync-notebooks
 
-docs:
+sync-notebooks:
+	python scripts/sync_docs_notebooks.py
+
+docs: sync-notebooks
 	mkdocs build --strict
 
-serve:
+serve: sync-notebooks
 	mkdocs serve
 
 figures:

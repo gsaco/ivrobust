@@ -112,6 +112,8 @@ def effective_f(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> EffectiveFResult:
     """
     Compute the effective F statistic (Montiel Olea & Pflueger) for p_endog=1.
@@ -119,7 +121,14 @@ def effective_f(
     if data.p_endog != 1:
         raise NotImplementedError("effective_f currently supports p_endog=1.")
 
-    rf = reduced_form(data, cov_type=cov_type, cov=cov, clusters=clusters)
+    rf = reduced_form(
+        data,
+        cov_type=cov_type,
+        cov=cov,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+    )
     k = rf.k_instr
     V_dd = rf.cov[k:, k:]
     stat = float((rf.pi_d.T @ sym_solve(V_dd, rf.pi_d)).ravel()[0] / k)
@@ -154,8 +163,17 @@ def kp_rk_stat(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> tuple[float, float, int]:
-    rf = reduced_form(data, cov_type=cov_type, cov=cov, clusters=clusters)
+    rf = reduced_form(
+        data,
+        cov_type=cov_type,
+        cov=cov,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+    )
     k = rf.k_instr
     V_dd = rf.cov[k:, k:]
     stat = float((rf.pi_d.T @ sym_solve(V_dd, rf.pi_d)).ravel()[0])
@@ -198,11 +216,25 @@ def weak_id_diagnostics(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> WeakIdDiagnostics:
     diag = first_stage_diagnostics(data)
-    eff = effective_f(data, cov=cov, cov_type=cov_type, clusters=clusters)
+    eff = effective_f(
+        data,
+        cov=cov,
+        cov_type=cov_type,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+    )
     rk_stat, rk_pval, _ = kp_rk_stat(
-        data, cov=cov, cov_type=cov_type, clusters=clusters
+        data,
+        cov=cov,
+        cov_type=cov_type,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
 
     if eff.statistic < 10.0:

@@ -24,7 +24,7 @@ Covariance options
 
 - `cov_type="HC0"|"HC1"|"HC2"|"HC3"` for heteroskedasticity-robust SEs
 - `cov_type="cluster"` for one-way cluster robust SEs
-- `cov_type="HAC"` for Newey–West-type SEs (Bartlett kernel, default lags)
+- `cov_type="HAC"` for Newey–West-type SEs (set `hac_lags` and `kernel`)
 
 ## Model wrapper
 

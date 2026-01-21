@@ -60,6 +60,7 @@ plugins:
             show_signature_annotations: true
   - bibtex:
       bib_file: "docs-src/references.bib"
+      enable_inline_citations: false
   - mkdocs-jupyter:
       include_source: true
       execute: false
@@ -99,8 +100,9 @@ nav:
   - Home: index.md
   - Start here:
       - Quickstart: quickstart.md
+      - Practitioner workflow: user-guide/workflow.md
+      - Choosing a method: user-guide/choosing.md
       - User guide: user-guide/index.md
-      - Notebooks: notebooks.md
   - Methods:
       - Methods at a glance: methods/index.md
       - Anderson-Rubin inference: user-guide/ar.md
@@ -109,10 +111,23 @@ nav:
       - Estimators: user-guide/estimators.md
       - Diagnostics & interpretation: diagnostics-interpretation.md
       - Diagnostics: user-guide/diagnostics.md
+      - Covariance choices: user-guide/covariance.md
+      - Numerical stability: user-guide/numerics.md
       - Many instruments: user-guide/many_instruments.md
       - Plotting: user-guide/plotting.md
+  - Examples:
+      - Notebook gallery: notebooks.md
+      - 00 Quickstart: notebooks/00_quickstart.ipynb
+      - 01 Practitioner workflow: notebooks/01_practitioner_workflow_single_endog.ipynb
+      - 02 Diagnostics and inference: notebooks/02_diagnostics_and_inference.ipynb
+      - 04 Many instruments bias: notebooks/04_many_instruments_bias_tsls_liml_fuller.ipynb
+      - 04 Real data example: notebooks/04_real_data_example.ipynb
+      - 08 Runtime scaling: notebooks/08_runtime_scaling.ipynb
   - Gallery: gallery.md
-  - API reference: reference/api.md
+  - API reference:
+      - Overview: reference/api.md
+      - Stable API: reference/stable_api.md
+      - Result objects: reference/results_objects.md
   - Research:
       - References: references.md
       - Replication: replication.md
@@ -120,5 +135,6 @@ nav:
       - Parity: parity.md
   - Project:
       - How to cite: how-to-cite.md
+      - Maintainer guide: maintainers.md
       - Roadmap: roadmap.md
       - FAQ: faq.md

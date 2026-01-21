@@ -2,8 +2,10 @@ name: Release Docs
 
 on:
   push:
+    branches: ["main"]
     tags:
       - "v*"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,6 +25,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[docs,plot]"
+
+      - name: Sync docs notebooks
+        run: python scripts/sync_docs_notebooks.py
 
       - name: Deploy docs
         run: mkdocs gh-deploy --force

@@ -20,13 +20,29 @@ def fit(
     estimator: Literal["2sls", "liml", "fuller"] = "2sls",
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     **kwargs: Any,
 ) -> IVResults:
     est = estimator.lower()
     if est in {"2sls", "tsls"}:
-        res = tsls(data, cov=cov, cov_type=cov_type, clusters=kwargs.get("clusters"))
+        res = tsls(
+            data,
+            cov=cov,
+            cov_type=cov_type,
+            clusters=kwargs.get("clusters"),
+            hac_lags=hac_lags,
+            kernel=kernel,
+        )
     elif est == "liml":
-        res = liml(data, cov=cov, cov_type=cov_type, clusters=kwargs.get("clusters"))
+        res = liml(
+            data,
+            cov=cov,
+            cov_type=cov_type,
+            clusters=kwargs.get("clusters"),
+            hac_lags=hac_lags,
+            kernel=kernel,
+        )
     elif est == "fuller":
         res = fuller(
             data,
@@ -34,14 +50,20 @@ def fit(
             cov=cov,
             cov_type=cov_type,
             clusters=kwargs.get("clusters"),
+            hac_lags=hac_lags,
+            kernel=kernel,
         )
     else:
         raise ValueError(f"Unknown estimator: {estimator}")
 
     diagnostics = {
         "first_stage": first_stage_diagnostics(data),
-        "effective_f": effective_f(data, cov=cov, cov_type=cov_type),
-        "weak_id": weak_id_diagnostics(data, cov=cov, cov_type=cov_type),
+        "effective_f": effective_f(
+            data, cov=cov, cov_type=cov_type, hac_lags=hac_lags, kernel=kernel
+        ),
+        "weak_id": weak_id_diagnostics(
+            data, cov=cov, cov_type=cov_type, hac_lags=hac_lags, kernel=kernel
+        ),
     }
 
     return IVResults(

@@ -21,6 +21,67 @@ class IntervalSet:
     def contains(self, x: float) -> bool:
         return any(lo <= x <= hi for lo, hi in self.intervals)
 
+    @property
+    def is_empty(self) -> bool:
+        return len(self.intervals) == 0
+
+    @property
+    def is_unbounded(self) -> bool:
+        return any(
+            (not (lo > float("-inf")) or not (hi < float("inf")))
+            for lo, hi in self.intervals
+        )
+
+    @property
+    def is_real_line(self) -> bool:
+        normalized = self.normalized()
+        return (
+            len(normalized.intervals) == 1
+            and normalized.intervals[0][0] == float("-inf")
+            and normalized.intervals[0][1] == float("inf")
+        )
+
+    @property
+    def is_disjoint(self) -> bool:
+        return len(self.normalized().intervals) > 1
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "intervals": [(float(lo), float(hi)) for lo, hi in self.intervals],
+        }
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, object]) -> IntervalSet:
+        intervals = payload.get("intervals", [])
+        if not isinstance(intervals, list):
+            raise ValueError("intervals must be a list of (lower, upper) pairs.")
+        parsed: list[tuple[float, float]] = []
+        for pair in intervals:
+            if not isinstance(pair, (list, tuple)) or len(pair) != 2:
+                raise ValueError("intervals must be a list of (lower, upper) pairs.")
+            parsed.append((float(pair[0]), float(pair[1])))
+        return cls(intervals=parsed)
+
+    def normalized(self) -> IntervalSet:
+        if not self.intervals:
+            return IntervalSet(intervals=[])
+
+        intervals = sorted(
+            ((float(lo), float(hi)) for lo, hi in self.intervals),
+            key=lambda pair: (pair[0], pair[1]),
+        )
+        merged: list[tuple[float, float]] = [intervals[0]]
+        for lo, hi in intervals[1:]:
+            prev_lo, prev_hi = merged[-1]
+            if lo <= prev_hi or np.isinf(prev_hi):
+                merged[-1] = (prev_lo, max(prev_hi, hi))
+            else:
+                merged.append((lo, hi))
+        return IntervalSet(intervals=merged)
+
+    def union(self, other: IntervalSet) -> IntervalSet:
+        return IntervalSet(intervals=self.intervals + other.intervals).normalized()
+
 
 def invert_pvalue_grid(
     *,

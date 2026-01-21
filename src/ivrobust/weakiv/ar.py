@@ -21,10 +21,38 @@ def ar_test(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     alpha: float | None = None,
 ) -> ARTestResult:
     """
     Anderson-Rubin test of H0: beta = beta0 (single endogenous regressor).
+
+    The AR statistic is the (robust) joint Wald test on instruments in the
+    regression of the null-imposed residual y - beta0 * d on [x, z].
+
+    Parameters
+    ----------
+    data
+        IVData with y, d, x, z arrays. Requires p_endog=1.
+    beta0
+        Null value for the endogenous coefficient.
+    cov, cov_type
+        Covariance configuration. Use cov_type="HAC" with hac_lags/kernel
+        for Newey-West style covariance.
+    clusters
+        Optional cluster labels (one-way clustering).
+    hac_lags
+        Number of HAC lags (Newey-West). If None, a default rule is used.
+    kernel
+        HAC kernel name ("bartlett" or "parzen").
+    alpha
+        Optional significance level stored in the result.
+
+    Returns
+    -------
+    ARTestResult
+        Test statistic, p-value, and metadata.
     """
     if data.p_endog != 1:
         raise NotImplementedError(
@@ -32,7 +60,12 @@ def ar_test(
         )
     b0 = float(np.asarray(beta0, dtype=np.float64).ravel()[0])
     rf = reduced_form(
-        data, cov_type=cov_type, cov=cov, clusters=clusters, kernel="bartlett"
+        data,
+        cov_type=cov_type,
+        cov=cov,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
 
     k = rf.k_instr
@@ -56,6 +89,9 @@ def ar_test(
         method="AR",
         cov_type=str(cov_type) if cov is None else str(getattr(cov, "cov_type", cov)),
         alpha=alpha,
+        cov_config={"hac_lags": hac_lags, "kernel": kernel}
+        if str(cov_type).upper() == "HAC"
+        else {},
         warnings=rf.warnings,
         details={
             "beta0": b0,
@@ -72,6 +108,8 @@ def ar_confidence_set(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     grid: FloatArray | None = None,
     beta_bounds: tuple[float, float] | None = None,
     n_grid: int = 2001,
@@ -81,6 +119,10 @@ def ar_confidence_set(
 ) -> ConfidenceSetResult:
     """
     Invert the AR test to obtain a (possibly disjoint) confidence set for beta.
+
+    Confidence sets are obtained by evaluating the AR p-value on a grid and
+    inverting p(beta) >= alpha. The result can be empty, unbounded, or a union
+    of disjoint intervals when instruments are weak.
     """
     if data.p_endog != 1:
         raise NotImplementedError(
@@ -100,6 +142,8 @@ def ar_confidence_set(
             cov=cov,
             cov_type=cov_type,
             clusters=clusters,
+            hac_lags=hac_lags,
+            kernel=kernel,
             alpha=alpha,
         ).pvalue,
         alpha=alpha,
@@ -107,7 +151,9 @@ def ar_confidence_set(
         inversion_spec=inversion_spec,
     )
 
-    grid_info.update({"cov_type": str(cov_type), "df": data.k_instr})
+    grid_info.update(
+        {"cov_type": str(cov_type), "df": data.k_instr, "hac_lags": hac_lags, "kernel": kernel}
+    )
 
     return ConfidenceSetResult(
         confidence_set=cs,

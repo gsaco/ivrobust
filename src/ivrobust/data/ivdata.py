@@ -25,7 +25,7 @@ class IVData:
     x : (n, p_exog)
         Exogenous regressors. Include an intercept column if desired.
     z : (n, k_instr)
-        Excluded instruments.
+        Excluded instruments (not including x).
     clusters : (n,)
         Optional cluster labels for cluster-robust covariance.
 
@@ -34,6 +34,13 @@ class IVData:
     - Arrays are coerced to float64 (or int64 for clusters).
     - NaN/inf values are rejected.
     - All inputs must have the same number of rows.
+
+    Notes
+    -----
+    - Weak-IV robust inference routines in ivrobust currently assume a single
+      endogenous regressor (p_endog=1).
+    - The intercept is not added implicitly unless you use IVData.from_arrays
+      with add_const=True; provide x with a constant column if desired.
     """
 
     y: FloatArray
@@ -138,6 +145,26 @@ def weak_iv_dgp(
 ) -> tuple[IVData, float]:
     """
     Generate a synthetic linear IV dataset with one endogenous regressor.
+
+    Parameters
+    ----------
+    n
+        Sample size.
+    k
+        Number of excluded instruments.
+    strength
+        First-stage strength parameter. Larger values imply stronger relevance.
+    beta
+        Structural coefficient on the endogenous regressor.
+    seed
+        Random seed for reproducibility.
+    rho
+        Correlation between structural and first-stage errors (endogeneity).
+
+    Returns
+    -------
+    (IVData, float)
+        The generated dataset and the true beta used in the DGP.
     """
     if n <= 5:
         raise ValueError("n must be > 5.")

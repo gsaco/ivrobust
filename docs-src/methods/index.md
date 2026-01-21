@@ -38,7 +38,7 @@ res.tests.keys(), res.confidence_sets.keys()
   (`p_endog=1`).
 - Confidence sets are produced by test inversion and can be disjoint or
   unbounded; report the full union of intervals.
-- Robust covariance options (HC0-HC3 and clustering) apply across tests and
+- Robust covariance options (HC0-HC3, clustering, HAC) apply across tests and
   diagnostics.
 
 ## Robust covariance and diagnostics

@@ -9,7 +9,7 @@ This roadmap distinguishes between:
 ## P0 (current)
 
 - AR/LM/CLR tests and confidence sets for a scalar structural parameter.
-- HC0/HC1/HC2/HC3 and one-way cluster-robust covariance options.
+- HC0/HC1/HC2/HC3, HAC, and one-way cluster-robust covariance options.
 - Effective F diagnostics for weak instruments.
 - Verified implementation against a reference regression engine.
 
@@ -17,7 +17,6 @@ This roadmap distinguishes between:
 
 - Multi-endogenous support with scalar-target inference.
 - Many-instrument diagnostics and optional many-IV adjustments.
-- HAC/serial correlation covariance extensions.
 
 ## P2 (extended)
 

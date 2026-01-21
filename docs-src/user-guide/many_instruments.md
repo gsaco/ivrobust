@@ -9,7 +9,7 @@ Key diagnostics
 - Effective F (Montiel Olea–Pflueger): heteroskedastic/cluster-robust strength.
 - Kleibergen–Paap rk statistic: underidentification test.
 - Cragg–Donald F (scalar endog): classical counterpart for comparison.
-- Stock–Yogo critical values: rule-of-thumb thresholds (partial table).
+- Stock–Yogo critical values: rule-of-thumb thresholds (partial table). [@stockyogo2005]
 
 Example
 

@@ -2,11 +2,12 @@
 # jupyter:
 #   jupytext:
 #     formats: ipynb,py:percent
+#     notebook_metadata_filter: jupytext,kernelspec,language_info
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.18.1
+#       jupytext_version: 1.16.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -72,6 +73,9 @@ ax.set_title("Runtime vs sample size and instruments")
 ivr.savefig(fig, ART / "runtime_by_nk", formats=("png", "pdf"))
 
 # %% [markdown]
+# ![Runtime by n and k](artifacts/08_runtime_scaling/runtime_by_nk.png)
+
+# %% [markdown]
 # ## Runtime vs grid size
 #
 # Hold n and k fixed, then vary the grid length used for inversion.
@@ -106,3 +110,6 @@ ax.set_xlabel("Grid size")
 ax.set_ylabel("Runtime (seconds)")
 ax.set_title("Runtime vs grid length")
 ivr.savefig(fig, ART / "runtime_by_grid", formats=("png", "pdf"))
+
+# %% [markdown]
+# ![Runtime by grid](artifacts/08_runtime_scaling/runtime_by_grid.png)

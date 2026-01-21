@@ -22,8 +22,8 @@ diag.f_statistic, diag.partial_r2
 ## Effective F (Montiel Olea-Pflueger)
 
 The effective F statistic is designed to remain informative under
-heteroskedasticity or clustering. It is based on the robust covariance of the
-reduced-form coefficients in the first stage.
+heteroskedasticity, clustering, or serial correlation. It is based on the
+robust covariance of the reduced-form coefficients in the first stage.
 
 ```python
 eff = ivr.effective_f(data, cov_type="HC1")

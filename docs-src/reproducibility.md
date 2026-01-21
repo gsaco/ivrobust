@@ -34,6 +34,15 @@ Notebooks are intentionally lightweight and use small sample sizes by default.
 Set environment variables or edit the notebook parameters if you need larger
 simulation sizes.
 
+## Sync notebooks into docs
+
+```bash
+python scripts/sync_docs_notebooks.py
+```
+
+The docs render a curated subset of notebooks. This sync copies the selected
+`.ipynb` files plus their saved figures into `docs-src/notebooks/`.
+
 ## Build documentation
 
 ```bash
@@ -48,6 +57,9 @@ Makefile shortcut:
 ```bash
 make docs
 ```
+
+`make docs` runs `sync_docs_notebooks.py` first to ensure rendered notebooks and
+figures are up to date.
 
 ## Link checking
 

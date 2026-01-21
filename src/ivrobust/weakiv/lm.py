@@ -20,6 +20,8 @@ def kp_lm_test(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     alpha: float | None = None,
 ) -> LMTestResult:
     """
@@ -32,7 +34,12 @@ def kp_lm_test(
 
     b0 = float(np.asarray(beta0, dtype=np.float64).ravel()[0])
     rf = reduced_form(
-        data, cov_type=cov_type, cov=cov, clusters=clusters, kernel="bartlett"
+        data,
+        cov_type=cov_type,
+        cov=cov,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
     k = rf.k_instr
 
@@ -85,6 +92,9 @@ def kp_lm_test(
         method="KP-LM",
         cov_type=str(cov_type) if cov is None else str(getattr(cov, "cov_type", cov)),
         alpha=alpha,
+        cov_config={"hac_lags": hac_lags, "kernel": kernel}
+        if str(cov_type).upper() == "HAC"
+        else {},
         warnings=tuple(warnings),
         details={"beta0": b0, "nobs": data.nobs, "k_instr": k},
     )
@@ -97,10 +107,19 @@ def lm_test(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     alpha: float | None = None,
 ) -> LMTestResult:
     return kp_lm_test(
-        data, beta0, cov=cov, cov_type=cov_type, clusters=clusters, alpha=alpha
+        data,
+        beta0,
+        cov=cov,
+        cov_type=cov_type,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
+        alpha=alpha,
     )
 
 
@@ -110,6 +129,8 @@ def kp_rank_test(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
 ) -> LMTestResult:
     """
     Kleibergen-Paap rk underidentification test (scalar endogenous regressor).
@@ -119,7 +140,12 @@ def kp_rank_test(
             "kp_rank_test currently supports a single endogenous regressor (p_endog=1)."
         )
     rf = reduced_form(
-        data, cov_type=cov_type, cov=cov, clusters=clusters, kernel="bartlett"
+        data,
+        cov_type=cov_type,
+        cov=cov,
+        clusters=clusters,
+        hac_lags=hac_lags,
+        kernel=kernel,
     )
     k = rf.k_instr
     V_dd = rf.cov[k:, k:]
@@ -131,6 +157,9 @@ def kp_rank_test(
         df=k,
         method="KP-rk",
         cov_type=str(cov_type) if cov is None else str(getattr(cov, "cov_type", cov)),
+        cov_config={"hac_lags": hac_lags, "kernel": kernel}
+        if str(cov_type).upper() == "HAC"
+        else {},
         warnings=rf.warnings,
         details={"nobs": data.nobs, "k_instr": k},
     )
@@ -143,6 +172,8 @@ def lm_confidence_set(
     cov: CovSpec | str | None = None,
     cov_type: CovType = "HC1",
     clusters: np.ndarray | None = None,
+    hac_lags: int | None = None,
+    kernel: str = "bartlett",
     grid: np.ndarray | None = None,
     beta_bounds: tuple[float, float] | None = None,
     n_grid: int = 2001,
@@ -168,13 +199,17 @@ def lm_confidence_set(
             cov=cov,
             cov_type=cov_type,
             clusters=clusters,
+            hac_lags=hac_lags,
+            kernel=kernel,
             alpha=alpha,
         ).pvalue,
         alpha=alpha,
         grid_spec=grid_spec,
         inversion_spec=inversion_spec,
     )
-    grid_info.update({"cov_type": str(cov_type), "df": 1})
+    grid_info.update(
+        {"cov_type": str(cov_type), "df": 1, "hac_lags": hac_lags, "kernel": kernel}
+    )
     return ConfidenceSetResult(
         confidence_set=cs, alpha=alpha, method="LM", grid_info=grid_info
     )
