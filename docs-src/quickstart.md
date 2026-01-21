@@ -112,8 +112,6 @@ ivr.savefig(fig, "artifacts/ar_cs", formats=("png", "pdf"), dpi=300)
 <div class="ivr-methods-grid" markdown>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">⚠️</div>
-
 ### Why Not Just Use 2SLS?
 
 Standard 2SLS t-tests can have severe size distortions when instruments are weak. 
@@ -121,8 +119,6 @@ The AR/LM/CLR tests in ivrobust remain valid regardless of instrument strength.
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📊</div>
-
 ### Set-Valued Confidence Sets
 
 Under weak identification, confidence sets may be disjoint (multiple intervals) 
@@ -130,8 +126,6 @@ or unbounded (extending to ±∞). ivrobust reports these directly without trimm
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">🛡️</div>
-
 ### Robust Covariance
 
 All tests support HC0-HC3 heteroskedasticity-robust and cluster-robust covariance 

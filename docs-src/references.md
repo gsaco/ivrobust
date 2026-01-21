@@ -13,8 +13,6 @@ methodological papers when reporting results.
 <div class="ivr-methods-grid" markdown>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📚</div>
-
 ### Anderson & Rubin (1949)
 
 **Estimation of the Parameters of a Single Equation in a Complete System of Stochastic Equations**
@@ -27,8 +25,6 @@ The foundational paper introducing the Anderson-Rubin test for structural parame
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📚</div>
-
 ### Kleibergen (2002)
 
 **Pivotal Statistics for Testing Structural Parameters in Instrumental Variables Regression**
@@ -41,8 +37,6 @@ Introduces the LM (K) statistic based on the score function, providing weak-IV r
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📚</div>
-
 ### Moreira (2003)
 
 **A Conditional Likelihood Ratio Test for Structural Models**
@@ -63,8 +57,6 @@ Develops the conditional likelihood ratio test that achieves near-optimal power 
 <div class="ivr-methods-grid" markdown>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📐</div>
-
 ### Mikusheva (2010)
 
 **Robust Confidence Sets in the Presence of Weak Instruments**
@@ -77,8 +69,6 @@ Theory for set-valued confidence sets under weak identification, including handl
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📊</div>
-
 ### Montiel Olea & Pflueger (2013)
 
 **A Robust Test for Weak Instruments**
@@ -91,8 +81,6 @@ The effective F-statistic for heteroskedasticity-robust weak instrument diagnost
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">🔧</div>
-
 ### Stock & Yogo (2005)
 
 **Testing for Weak Instruments in Linear IV Regression**
@@ -111,8 +99,6 @@ Critical values for weak instrument testing and guidelines for first-stage diagn
 <div class="ivr-methods-grid" markdown>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">💻</div>
-
 ### Finlay & Magnusson (2009)
 
 **Implementing Weak-Instrument Robust Tests for a General Class of Instrumental-Variables Models**
@@ -125,8 +111,6 @@ Practical implementation guidance and Stata commands for weak-IV robust inferenc
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📖</div>
-
 ### Andrews, Stock & Sun (2019)
 
 **Weak Instruments in Instrumental Variables Regression: Theory and Practice**

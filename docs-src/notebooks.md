@@ -8,42 +8,42 @@ full directory for additional materials.
 
 <div class="grid cards iv-grid" markdown>
 
--   :material-rocket-launch: **00 Quickstart**
+-   **00 Quickstart**
 
     Weak instruments in 10 minutes. Unified API, confidence sets, and plots.
 
     [Open notebook](00_quickstart/)
     [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/00_quickstart.ipynb)
 
--   :material-compass: **01 Practitioner workflow (single endog)**
+-   **01 Practitioner workflow (single endog)**
 
     End-to-end applied workflow with AR/LM/CLR tests and confidence sets.
 
     [Open notebook](01_practitioner_workflow_single_endog/)
     [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/01_practitioner_workflow_single_endog.ipynb)
 
--   :material-stethoscope: **02 Diagnostics and inference**
+-   **02 Diagnostics and inference**
 
     Effective F, weak-ID diagnostics, and interpretation guidance.
 
     [Open notebook](02_diagnostics_and_inference/)
     [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/02_diagnostics_and_inference.ipynb)
 
--   :material-vector-combine: **04 Many instruments bias**
+-   **04 Many instruments bias**
 
     TSLS vs LIML vs Fuller bias and RMSE as k/n grows.
 
     [Open notebook](04_many_instruments_bias_tsls_liml_fuller/)
     [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_many_instruments_bias_tsls_liml_fuller.ipynb)
 
--   :material-domain: **04 Real data example**
+-   **04 Real data example**
 
     Real-data IV workflow with robust inference and plots.
 
     [Open notebook](04_real_data_example/)
     [View source](https://github.com/gsaco/ivrobust/blob/main/notebooks/04_real_data_example.ipynb)
 
--   :material-timer: **08 Runtime scaling**
+-   **08 Runtime scaling**
 
     Lightweight runtime checks for grid inversion and inference.
 

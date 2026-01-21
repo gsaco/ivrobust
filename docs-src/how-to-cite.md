@@ -8,7 +8,7 @@ methodological references for the specific tests you employ.
 ## Citing ivrobust
 
 <div class="ivr-citation-block" markdown>
-<span class="ivr-citation-block__label">📄 BibTeX</span>
+<span class="ivr-citation-block__label">BibTeX</span>
 
 ```bibtex
 @software{ivrobust,
@@ -24,7 +24,7 @@ methodological references for the specific tests you employ.
 </div>
 
 <div class="ivr-citation-block" markdown>
-<span class="ivr-citation-block__label">📝 APA Format</span>
+<span class="ivr-citation-block__label">APA Format</span>
 
 ```
 Saco, G., & contributors. (2026). ivrobust: Weak-IV robust inference in Python 

@@ -15,73 +15,73 @@ publication-ready plots.
 
 <div class="grid cards iv-grid" markdown>
 
--   :material-scale-balance: **Anderson-Rubin inference**
+-   **Anderson-Rubin inference**
 
     Robust inference under weak identification.
 
     [Read more](ar.md)
 
--   :material-waveform: **LM/K test**
+-   **LM/K test**
 
     Kleibergen-Paap LM statistics and confidence sets.
 
     [Read more](lm.md)
 
--   :material-chart-bell-curve: **CLR test**
+-   **CLR test**
 
     Conditional likelihood ratio inference and grids.
 
     [Read more](clr.md)
 
--   :material-atom: **Estimators**
+-   **Estimators**
 
     2SLS, LIML, Fuller, and k-class estimators.
 
     [Read more](estimators.md)
 
--   :material-stethoscope: **Diagnostics**
+-   **Diagnostics**
 
     Effective F, weak-ID diagnostics, and rank tests.
 
     [Read more](diagnostics.md)
 
--   :material-compass: **Diagnostics & interpretation**
+-   **Diagnostics & interpretation**
 
     Practical guidance on reading outputs and avoiding pitfalls.
 
     [Read more](../diagnostics-interpretation.md)
 
--   :material-vector-combine: **Many instruments**
+-   **Many instruments**
 
     Guidance when k is large relative to n.
 
     [Read more](many_instruments.md)
 
--   :material-palette: **Plotting**
+-   **Plotting**
 
     Style conventions and figure output for papers.
 
     [Read more](plotting.md)
 
--   :material-directions: **Choosing a method**
+-   **Choosing a method**
 
     Decision table for AR/LM/CLR selection and covariance regimes.
 
     [Read more](choosing.md)
 
--   :material-route: **Workflow**
+-   **Workflow**
 
     Estimate -> diagnose -> test -> confidence set workflow.
 
     [Read more](workflow.md)
 
--   :material-shield-check: **Covariance choices**
+-   **Covariance choices**
 
     HC, cluster, and HAC options and what they change.
 
     [Read more](covariance.md)
 
--   :material-numeric: **Numerics**
+-   **Numerics**
 
     Grid inversion, edge cases, and stability considerations.
 

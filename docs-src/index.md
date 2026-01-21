@@ -1,14 +1,16 @@
 <div class="ivr-hero" markdown>
+<div class="ivr-hero__layout" markdown>
 
-<span class="ivr-hero__badge">
-<span class="emoji">🔬</span> Research-Grade Econometrics
-</span>
+<div class="ivr-hero__copy" markdown>
+<span class="ivr-hero__badge">Research Software</span>
 
-<h1 class="ivr-hero__title">Weak-IV Robust Inference for Modern Econometrics</h1>
+<h1 class="ivr-hero__title">Weak-IV robust inference for linear IV</h1>
 
 <p class="ivr-hero__subtitle">
-A Python library implementing Anderson-Rubin, LM/K, and CLR tests with robust covariance options, 
-set-valued confidence sets, and comprehensive diagnostics. Built by researchers, for researchers.
+ivrobust is a Python library for weak-instrument robust inference in linear IV
+models. It implements Anderson-Rubin, LM/K, and CLR tests with robust
+covariance options, set-valued confidence sets, and instrument-strength
+diagnostics designed for applied research workflows.
 </p>
 
 <div class="ivr-hero__actions">
@@ -17,30 +19,48 @@ set-valued confidence sets, and comprehensive diagnostics. Built by researchers,
 <a href="https://github.com/gsaco/ivrobust" class="md-button">View on GitHub</a>
 </div>
 
+<div class="ivr-hero__install">
+<span class="ivr-hero__install-label">Install</span>
+<code>pip install "ivrobust[plot]"</code>
+</div>
+
 <div class="ivr-hero__features">
 <div class="ivr-feature">
-<div class="ivr-feature__icon">⚖️</div>
+<div class="ivr-feature__icon">01</div>
 <div class="ivr-feature__text">
-<strong>Weak-IV Robust</strong>
-<span>Valid inference under weak identification</span>
+<strong>Unified workflow</strong>
+<span>AR, LM, and CLR tests and confidence sets in one call.</span>
 </div>
 </div>
 <div class="ivr-feature">
-<div class="ivr-feature__icon">📊</div>
+<div class="ivr-feature__icon">02</div>
 <div class="ivr-feature__text">
-<strong>Set-Valued CIs</strong>
-<span>Disjoint and unbounded intervals supported</span>
+<strong>Robust covariance</strong>
+<span>HC0-HC3, cluster, and HAC options across tests and diagnostics.</span>
 </div>
 </div>
 <div class="ivr-feature">
-<div class="ivr-feature__icon">🛡️</div>
+<div class="ivr-feature__icon">03</div>
 <div class="ivr-feature__text">
-<strong>Robust Covariance</strong>
-<span>HC0-HC3, clustering, and HAC options</span>
+<strong>Diagnostics first</strong>
+<span>Effective F, KP rk, and weak-ID summaries for reporting.</span>
+</div>
 </div>
 </div>
 </div>
 
+<div class="ivr-hero__figure" markdown>
+<figure class="ivr-figure" markdown>
+![Weak-IV p-value curves](assets/figures/pvalue_curve.png)
+<figcaption>
+<strong>Weak-IV p-value curves.</strong>
+AR, LM, and CLR p-values computed across a beta grid using
+<code>weakiv_inference</code>.
+</figcaption>
+</figure>
+</div>
+
+</div>
 </div>
 
 <div class="ivr-badge-row">
@@ -53,21 +73,37 @@ set-valued confidence sets, and comprehensive diagnostics. Built by researchers,
 
 <section class="ivr-section" markdown>
 
-## The Weak Instrument Problem
+## Why ivrobust
 
+<div class="ivr-split" markdown>
+<div class="ivr-split__content" markdown>
+ivrobust targets weak instruments in linear IV models and emphasizes
+research-grade reporting. Standard 2SLS t-tests can be severely distorted when
+instruments are weak. The AR, LM, and CLR procedures in ivrobust remain valid
+under weak identification, following the guidance of [@andrews2019].
+
+Key properties:
+
+- Set-valued confidence sets from test inversion (disjoint or unbounded is
+  expected under weak identification).
+- Robust covariance regimes that match applied settings (HC0-HC3, cluster, HAC).
+- Strength diagnostics and underidentification tests in the same workflow.
+</div>
+
+<div class="ivr-split__media" markdown>
 <figure class="ivr-figure" markdown>
-![Weak vs Strong IV Inference](assets/figures/hero_concept.png)
+![AR confidence set](assets/figures/ar_confidence_set.png)
 <figcaption>
-<strong>Figure 1: The identification challenge.</strong> 
-Strong instruments yield precise estimates (blue), while weak instruments create wide, unreliable confidence regions (coral). 
-ivrobust provides tests that remain valid regardless of instrument strength.
+<strong>AR confidence set.</strong>
+Inversion yields set-valued intervals without trimming or ad hoc fixes.
 </figcaption>
 </figure>
+</div>
+</div>
 
 <div class="ivr-callout ivr-callout--accent" markdown>
-**Why this matters:** Standard IV inference (2SLS t-tests) can be severely distorted when instruments are weak. 
-The Anderson-Rubin, LM, and CLR tests implemented in ivrobust maintain correct size even under weak identification,
-following the guidance of [@andrews2019] and modern weak-IV econometrics.
+**Scope:** weak-IV robust inference currently targets a single endogenous
+regressor (<code>p_endog=1</code>) with optional exogenous controls.
 </div>
 
 </section>
@@ -76,61 +112,50 @@ following the guidance of [@andrews2019] and modern weak-IV econometrics.
 
 <section class="ivr-section" markdown>
 
-## Core Methods
-
-<figure class="ivr-figure" markdown>
-![Method Overview](assets/figures/method_overview.png)
-<figcaption>
-<strong>Figure 2: ivrobust methodology.</strong> 
-Three complementary approaches to weak-IV robust inference, each with distinct properties and use cases.
-</figcaption>
-</figure>
+## Core methods
 
 <div class="ivr-methods-grid" markdown>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">⚖️</div>
 
 ### Anderson-Rubin (AR)
 
-The foundational weak-IV robust test. Inverts the joint test on instruments 
-for confidence sets that are valid regardless of instrument strength.
+Joint test on instruments under the null. Inversion yields confidence sets that
+are valid regardless of instrument strength.
 
 <div class="ivr-method-card__equation">
-AR(β₀) = (Y - Xβ₀)'Pz(Y - Xβ₀) / s²
+AR(beta0) = (Y - X beta0)' Pz (Y - X beta0) / s^2
 </div>
 
-<span class="ivr-method-card__cite">📚 Anderson & Rubin (1949)</span>
+<span class="ivr-method-card__cite">Reference: Anderson and Rubin (1949)</span>
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📈</div>
 
 ### Lagrange Multiplier (LM/K)
 
-Kleibergen's score-based test with optimal local power. Uses the score function 
-under the null hypothesis for efficient weak-IV robust inference.
+Kleibergen-Paap score test with robust covariance choices. Often higher power
+than AR while retaining weak-ID validity.
 
 <div class="ivr-method-card__equation">
-LM(β₀) = S(β₀)'Ω⁻¹S(β₀)
+LM(beta0) = S(beta0)' Omega^-1 S(beta0)
 </div>
 
-<span class="ivr-method-card__cite">📚 Kleibergen (2002)</span>
+<span class="ivr-method-card__cite">Reference: Kleibergen (2002)</span>
 </div>
 
 <div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📊</div>
 
 ### Conditional Likelihood Ratio (CLR)
 
-Moreira's conditional test combining AR and LM statistics. Achieves near-optimal 
-power while maintaining weak-IV robustness through conditioning.
+Conditional likelihood ratio inference (CQLR by default) with grid inversion for
+confidence sets.
 
 <div class="ivr-method-card__equation">
-CLR(β₀) = ½(AR - rk + √((AR - rk)² + 4·LM·rk))
+CLR(beta0) = 0.5 (AR - rk + sqrt((AR - rk)^2 + 4 * LM * rk))
 </div>
 
-<span class="ivr-method-card__cite">📚 Moreira (2003)</span>
+<span class="ivr-method-card__cite">Reference: Moreira (2003)</span>
 </div>
 
 </div>
@@ -141,15 +166,16 @@ CLR(β₀) = ½(AR - rk + √((AR - rk)² + 4·LM·rk))
 
 <section class="ivr-section" markdown>
 
-## Quick Example
+## Quick example
 
 ```python
 import ivrobust as ivr
 
-# Generate synthetic weak-IV data
+# Synthetic weak-IV data
+# (single endogenous regressor; intercept included)
 data, beta_true = ivr.weak_iv_dgp(n=300, k=5, strength=0.4, beta=1.0, seed=0)
 
-# Run weak-IV robust inference
+# Weak-IV robust inference
 res = ivr.weakiv_inference(
     data,
     beta0=beta_true,
@@ -158,14 +184,14 @@ res = ivr.weakiv_inference(
     cov_type="HC1",
 )
 
-# Access test results
+# Results
 print(f"AR p-value: {res.tests['AR'].pvalue:.4f}")
 print(f"CLR confidence set: {res.confidence_sets['CLR'].intervals}")
 ```
 
 <div class="ivr-button-row">
 <a href="quickstart/" class="md-button md-button--primary">Full Quickstart Guide</a>
-<a href="notebooks/" class="md-button">Interactive Notebooks</a>
+<a href="notebooks/" class="md-button">Notebook Gallery</a>
 </div>
 
 </section>
@@ -174,32 +200,64 @@ print(f"CLR confidence set: {res.confidence_sets['CLR'].intervals}")
 
 <section class="ivr-section" markdown>
 
-## Practitioner Workflow
+## Core functionality
+
+<div class="grid cards iv-grid" markdown>
+
+-   **Weak-IV inference**
+
+    Unified workflow via `weakiv_inference` plus individual entrypoints for
+    `ar_test`, `lm_test`, `clr_test`, and their inverted confidence sets.
+
+-   **Diagnostics**
+
+    `first_stage_diagnostics`, `effective_f`, `weak_id_diagnostics`, `kp_rank_test`,
+    and `stock_yogo_critical_values` for instrument strength reporting.
+
+-   **Estimators**
+
+    `tsls`, `liml`, `fuller`, and `fit` for point estimates and conventional
+    robust standard errors (workflow support).
+
+-   **Plotting**
+
+    `plot_ar_confidence_set`, `res.plot()` for p-value curves, plus `set_style`
+    and `savefig` for publication-ready figures.
+
+</div>
+
+</section>
+
+---
+
+<section class="ivr-section" markdown>
+
+## Practitioner workflow
 
 <div class="ivr-workflow">
 <div class="ivr-workflow__step">
-<div class="ivr-workflow__icon">📁</div>
-<h4>1. Prepare Data</h4>
-<p>Structure your IV model with IVData</p>
+<div class="ivr-workflow__icon">1</div>
+<h4>Prepare data</h4>
+<p>Use `IVData` or `IVModel.from_arrays`</p>
 </div>
 <div class="ivr-workflow__step">
-<div class="ivr-workflow__icon">🔍</div>
-<h4>2. Diagnose</h4>
-<p>Check instrument strength with diagnostics</p>
+<div class="ivr-workflow__icon">2</div>
+<h4>Diagnose strength</h4>
+<p>Report effective F and KP rk</p>
 </div>
 <div class="ivr-workflow__step">
-<div class="ivr-workflow__icon">✓</div>
-<h4>3. Test</h4>
-<p>Run AR/LM/CLR tests at your hypothesis</p>
+<div class="ivr-workflow__icon">3</div>
+<h4>Test and invert</h4>
+<p>Run AR, LM, and CLR with a shared covariance spec</p>
 </div>
 <div class="ivr-workflow__step">
-<div class="ivr-workflow__icon">📈</div>
-<h4>4. Report</h4>
-<p>Generate publication-ready figures</p>
+<div class="ivr-workflow__icon">4</div>
+<h4>Report and plot</h4>
+<p>Use p-value curves and set-valued intervals</p>
 </div>
 </div>
 
-<a href="user-guide/workflow/" class="md-button">Complete Workflow Guide →</a>
+<a href="user-guide/workflow/" class="md-button">Complete Workflow Guide</a>
 
 </section>
 
@@ -207,7 +265,7 @@ print(f"CLR confidence set: {res.confidence_sets['CLR'].intervals}")
 
 <section class="ivr-section" markdown>
 
-## Gallery Highlights
+## Gallery highlights
 
 <div class="ivr-gallery" markdown>
 
@@ -215,7 +273,7 @@ print(f"CLR confidence set: {res.confidence_sets['CLR'].intervals}")
 ![P-value curves](assets/figures/pvalue_curve.png)
 <figcaption>
 <strong>P-value curves across the parameter space.</strong>
-AR, LM, and CLR p-values showing where the null hypothesis is rejected.
+AR, LM, and CLR p-values showing where the null is rejected.
 </figcaption>
 </figure>
 
@@ -223,13 +281,13 @@ AR, LM, and CLR p-values showing where the null hypothesis is rejected.
 ![Rejection rates](assets/figures/rejection_vs_strength.png)
 <figcaption>
 <strong>Monte Carlo rejection rates.</strong>
-AR maintains correct size while 2SLS t-test over-rejects under weak instruments.
+AR maintains correct size while 2SLS t-tests over-reject under weak instruments.
 </figcaption>
 </figure>
 
 </div>
 
-<a href="gallery/" class="md-button">View Full Gallery →</a>
+<a href="gallery/" class="md-button">View Full Gallery</a>
 
 </section>
 
@@ -237,10 +295,11 @@ AR maintains correct size while 2SLS t-test over-rejects under weak instruments.
 
 <section class="ivr-section ivr-team-section" markdown>
 
-## Research Team
+## Research team
 
 <p class="section-lead">
-ivrobust is developed and maintained by researchers committed to rigorous, reproducible econometric software.
+ivrobust is developed and maintained by researchers committed to rigorous,
+reproducible econometric software.
 </p>
 
 <div class="ivr-team-grid">
@@ -269,7 +328,7 @@ ivrobust is developed and maintained by researchers committed to rigorous, repro
 ## Citing ivrobust
 
 <div class="ivr-citation-block" markdown>
-<span class="ivr-citation-block__label">📄 BibTeX</span>
+<span class="ivr-citation-block__label">BibTeX</span>
 
 ```bibtex
 @software{ivrobust,
@@ -283,8 +342,8 @@ ivrobust is developed and maintained by researchers committed to rigorous, repro
 
 </div>
 
-When using ivrobust, please also cite the methodological references for the specific 
-tests you employ (see [References](references.md)).
+When using ivrobust, please also cite the methodological references for the
+specific tests you employ (see [References](references.md)).
 
 </section>
 
@@ -292,36 +351,24 @@ tests you employ (see [References](references.md)).
 
 <section class="ivr-section" markdown>
 
-## Trust & Reproducibility
+## Trust and reproducibility
 
-<div class="ivr-methods-grid" markdown>
+<div class="grid cards iv-grid" markdown>
 
-<div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">🔄</div>
+-   **Continuous integration**
 
-### Continuous Integration
+    Linting, type checks, unit tests, notebook execution, and docs builds run
+    on every change.
 
-All commits are tested against a comprehensive suite including linting, 
-type checks, unit tests, notebook execution, and documentation builds.
-</div>
+-   **Reproducible figures**
 
-<div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">🎯</div>
+    Every figure in the documentation is generated from committed code with
+    fixed random seeds.
 
-### Reproducible Figures
+-   **Clear scope**
 
-Every figure in the documentation is generated from committed code with 
-fixed random seeds, ensuring full reproducibility.
-</div>
-
-<div class="ivr-method-card" markdown>
-<div class="ivr-method-card__icon">📖</div>
-
-### Clear Scope
-
-Focused implementation of weak-IV robust inference for a single endogenous 
-regressor with comprehensive documentation and examples.
-</div>
+    Focused implementation of weak-IV robust inference for a single endogenous
+    regressor with comprehensive documentation and examples.
 
 </div>
 
@@ -330,7 +377,7 @@ regressor with comprehensive documentation and examples.
 ---
 
 <div class="ivr-button-row" style="justify-content: center; margin-top: 3rem;">
-<a href="quickstart/" class="md-button md-button--primary">Get Started →</a>
+<a href="quickstart/" class="md-button md-button--primary">Get Started</a>
 <a href="user-guide/" class="md-button">User Guide</a>
 <a href="reference/api/" class="md-button">API Reference</a>
 </div>

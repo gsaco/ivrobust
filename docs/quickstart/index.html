@@ -2332,19 +2332,16 @@
 <h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
 <div class="ivr-methods-grid">
 <div class="ivr-method-card">
-<div class="ivr-method-card__icon">⚠️</div>
 <h3 id="why-not-just-use-2sls">Why Not Just Use 2SLS?<a class="headerlink" href="#why-not-just-use-2sls" title="Permanent link">&para;</a></h3>
 <p>Standard 2SLS t-tests can have severe size distortions when instruments are weak. 
 The AR/LM/CLR tests in ivrobust remain valid regardless of instrument strength.</p>
 </div>
 <div class="ivr-method-card">
-<div class="ivr-method-card__icon">📊</div>
 <h3 id="set-valued-confidence-sets">Set-Valued Confidence Sets<a class="headerlink" href="#set-valued-confidence-sets" title="Permanent link">&para;</a></h3>
 <p>Under weak identification, confidence sets may be disjoint (multiple intervals) 
 or unbounded (extending to ±∞). ivrobust reports these directly without trimming.</p>
 </div>
 <div class="ivr-method-card">
-<div class="ivr-method-card__icon">🛡️</div>
 <h3 id="robust-covariance">Robust Covariance<a class="headerlink" href="#robust-covariance" title="Permanent link">&para;</a></h3>
 <p>All tests support HC0-HC3 heteroskedasticity-robust and cluster-robust covariance 
 estimation via the <code>cov_type</code> parameter.</p>
